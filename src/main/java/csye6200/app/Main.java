@@ -14,9 +14,10 @@ public class Main extends Application {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/main/resources/fxml/test.fxml"));
 //			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root,400,400);
+			Scene scene = new Scene(root,primaryStage.getWidth(), primaryStage.getHeight());
 			scene.getStylesheets().add(getClass().getResource("/main/resources/css/application.css").toExternalForm());
 			primaryStage.setScene(scene);
+			primaryStage.setMaximized(true);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
