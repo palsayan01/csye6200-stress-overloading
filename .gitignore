@@ -27,4 +27,4 @@ replay_pid*
 .project
 .classpath
 .metadata
-db.properties
+src/main/resources/properties/db.properties
