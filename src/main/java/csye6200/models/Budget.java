@@ -1,28 +1,17 @@
 package main.java.csye6200.models;
 
-import java.util.Date;
+import java.util.UUID;
 
 public class Budget {
 
 	private String budgetId;
     private double amount;
     private double remainingAmount;
-    private Date startDate;
-    private Date endDate;
-    
-    // Constructor
-	public Budget(double amount, double remainingAmount, Date startDate, Date endDate) {
-		super();
-		this.amount = amount;
-		this.remainingAmount = remainingAmount;
-		this.startDate = startDate;
-		this.endDate = endDate;
-	}
+    private String month;
+    private int year;
+    private Category category;
 	
 	//Getter and Setter methods
-	public String getBudgetId() {
-		return budgetId;
-	}
 	public double getAmount() {
 		return amount;
 	}
@@ -35,18 +24,41 @@ public class Budget {
 	public void setRemainingAmount(double remainingAmount) {
 		this.remainingAmount = remainingAmount;
 	}
-	public Date getStartDate() {
-		return startDate;
+
+	public Category getCategory() {
+		return category;
 	}
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
-	public Date getEndDate() {
-		return endDate;
+
+	public String getBudgetId() {
+		return budgetId;
 	}
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+
+	public void setBudgetId() {
+		this.budgetId = UUID.randomUUID().toString();
 	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+	
+	
+	
     
     
 }
