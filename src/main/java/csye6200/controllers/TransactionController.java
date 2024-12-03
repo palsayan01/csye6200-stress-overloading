@@ -61,6 +61,7 @@ public class TransactionController {
         }}
     }
     private void saveTransaction() {
+
         String description = descriptionField.getText();
         TransactionType type = typeComboBox.getValue();
         String category = categoryComboBox.getValue();  // Category is a String

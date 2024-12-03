@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import main.java.csye6200.dao.TransactionHistoryDAO;
 import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.models.Transaction;
@@ -74,15 +75,15 @@ public class TransactionHistoryController {
         }
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
-        fromToColumn.setCellValueFactory(new PropertyValueFactory<>("fromTo"));
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         loadTransactionData();
 
-        filterComboBox.setItems(FXCollections.observableArrayList("Income", "Expense", "All"));
+        filterComboBox.setItems(FXCollections.observableArrayList("INCOME", "EXPENSE", "All"));
     }
 
     private void loadTransactionData() {
@@ -125,7 +126,12 @@ public class TransactionHistoryController {
             }
         }
     }
+    @FXML
+	public void goBack() {
+		Stage stage = (Stage) backButton.getScene().getWindow();
+		stage.close();
 
+	}
     @FXML
     private void handleBackAction(ActionEvent event) {
         // Implement navigation to the previous scene as needed.

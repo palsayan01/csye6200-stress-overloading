@@ -28,16 +28,12 @@ public class TransactionHistoryDAO {
             resultSet = statement.executeQuery();
             
             while (resultSet.next()) {
-            	System.out.print(resultSet.getInt("id"));
-                System.out.print("disjdijs");
-                System.out.print(resultSet.getInt("date"));
                 Transaction transaction = new Transaction(
-                        resultSet.getInt("id"),
                         resultSet.getString("description"),
                         resultSet.getDouble("amount"),
-                        resultSet.getDate("date").toLocalDate(),
-                        resultSet.getString("category"),
-                        TransactionType.valueOf(resultSet.getString("type"))
+                        resultSet.getDate("transaction_date").toLocalDate(),
+                        resultSet.getString("category_id"),
+                        TransactionType.valueOf(resultSet.getString("transaction_type"))
                 );
                 transactions.add(transaction);
             }
@@ -72,12 +68,11 @@ public class TransactionHistoryDAO {
 
             while (resultSet.next()) {
                 Transaction transaction = new Transaction(
-                        resultSet.getInt("id"),
-                        resultSet.getString("description"),
+                		resultSet.getString("description"),
                         resultSet.getDouble("amount"),
-                        resultSet.getDate("date").toLocalDate(),
-                        resultSet.getString("category"),
-                        TransactionType.valueOf(resultSet.getString("type"))
+                        resultSet.getDate("transaction_date").toLocalDate(),
+                        resultSet.getString("category_id"),
+                        TransactionType.valueOf(resultSet.getString("transaction_type"))
                 );
                 transactions.add(transaction);
             }
