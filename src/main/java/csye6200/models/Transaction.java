@@ -1,9 +1,10 @@
 package main.java.csye6200.models;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class Transaction {
-    private int id;                    // Maps to the ID column in the table
+    private String id;                    // Maps to the ID column in the table
     private String description;        // Maps to the DESCRIPTION column
     private double amount;             // Maps to the AMOUNT column
     private LocalDate transactionDate; // Renamed to match the TRANSACTION_DATE column
@@ -12,8 +13,7 @@ public class Transaction {
     public static int count = 0;
     // Constructor
     public Transaction(String description, double amount, LocalDate transactionDate, String category, TransactionType type) {
-        this.id = count;
-        count++;
+        this.id = UUID.randomUUID().toString();
         this.description = description;
         this.amount = amount;
         this.transactionDate = transactionDate;
@@ -22,13 +22,13 @@ public class Transaction {
     }
 
     // Getters and Setters
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+//    public void setId(String id) {
+//        this.id = id;
+//    }
 
     public String getDescription() {
         return description;
