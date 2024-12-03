@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import main.java.csye6200.models.Budget;
 import main.java.csye6200.models.Category;
@@ -50,4 +52,28 @@ public class CategoryDAOImpl {
 		return rs;
 		
 	}
+	
+	public Map<String, String> getCategories(String type) throws ClassNotFoundException {
+        Map<String, String> categoryMap = new HashMap<>();
+        if(type == "INCOME") {
+        	categoryMap.put("Salary", "ss");
+        }else {
+        try {
+            con = dbConnection.getConnection();
+            String query = "SELECT CATEGORY_ID, CATEGORY_NAME FROM CATEGORY";  // Get both ID and Name
+            PreparedStatement st = con.prepareStatement(query);
+            rs = st.executeQuery();
+            
+            while (rs.next()) {
+                String categoryName = rs.getString("CATEGORY_NAME");
+                String categoryId = rs.getString("CATEGORY_ID");
+                categoryMap.put(categoryName, categoryId);  // Store category name and ID
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        }
+        
+        return categoryMap;
+    }
 }
