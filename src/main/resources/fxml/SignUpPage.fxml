@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,33 +16,38 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.csye6200.controllers.SignUpController">
    <center>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="281.0" prefWidth="276.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" fillWidth="false" prefHeight="300.0" prefWidth="200.0">
          <children>
             <HBox alignment="CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="279.0">
                <children>
-                  <TextField id="nameField" fx:id="nameField" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="175.0" promptText="Enter your name" />
+                  <TextField fx:id="firstName" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="175.0" promptText="Enter your first name" />
                </children>
             </HBox>
             <HBox alignment="CENTER" fillHeight="false" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="279.0">
                <children>
-                  <TextField id="emailField" fx:id="emailField" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="175.0" promptText="Enter your email" />
+                  <TextField fx:id="lastName" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="175.0" promptText="Enter your last name" />
                </children>
             </HBox>
             <HBox alignment="CENTER" fillHeight="false" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="279.0">
                <children>
-                  <TextField id="password" fx:id="pwField" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="170.0" promptText="Enter your password" />
+                  <TextField fx:id="emailField" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="175.0" promptText="Enter your email" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" fillHeight="false" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="279.0">
+               <children>
+                  <PasswordField fx:id="pwField" alignment="CENTER" prefHeight="27.0" prefWidth="176.0" promptText="Enter your password" />
                </children>
             </HBox>
             <HBox alignment="CENTER" fillHeight="false" layoutX="10.0" layoutY="111.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="47.0" prefWidth="277.0">
                <children>
-                  <TextField id="password" fx:id="cpwField" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="179.0" promptText="Confirm your password" />
+                  <PasswordField fx:id="cpwField" alignment="CENTER" prefHeight="27.0" prefWidth="179.0" promptText="Confirm your password" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="41.0" prefWidth="214.0">
                <children>
-                  <Button id="signUpButton" fx:id="btnSignup" alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="77.0" snapToPixel="false" style="-fx-background-color: #FFCA28; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px; -fx-background-radius: 5px;" text="SIGNUP">
+                  <Button id="signUpButton" fx:id="btnSignup" alignment="CENTER" mnemonicParsing="false" onAction="#createUserAccount" prefHeight="40.0" prefWidth="77.0" snapToPixel="false" style="-fx-background-color: #FFCA28; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px; -fx-background-radius: 5px;" text="SIGNUP">
                      <font>
                         <Font name="System Bold" size="31.0" />
                      </font>
@@ -53,20 +60,26 @@
                </children>
             </HBox>
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </VBox>
    </center>
    <left>
-      <ImageView fitHeight="299.0" fitWidth="314.0" pickOnBounds="true" BorderPane.alignment="CENTER_LEFT">
+      <ImageView blendMode="SRC_ATOP" fitHeight="400.0" pickOnBounds="true" preserveRatio="true" scaleX="1.2" scaleY="1.3" BorderPane.alignment="TOP_LEFT">
          <image>
             <Image url="@../images/pexels-breakingpic-3305.jpg" />
          </image>
          <BorderPane.margin>
-            <Insets />
+            <Insets top="60.0" />
          </BorderPane.margin>
+         <viewport>
+            <Rectangle2D />
+         </viewport>
       </ImageView>
    </left>
    <top>
-      <HBox alignment="CENTER" opacity="0.64" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #FFCA28;" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" opacity="0.64" prefHeight="150.0" prefWidth="600.0" style="-fx-background-color: #FFCA28;" BorderPane.alignment="CENTER">
          <children>
             <Label prefHeight="31.0" prefWidth="498.0" text="BudgetBuddy: Your Smart Financial Companion!">
                <font>
