@@ -24,6 +24,7 @@ public class EditTransactionController {
     @FXML private DatePicker datePicker;
     @FXML private Button saveButton;
     @FXML private Button cancelButton;
+//    @FXML private Button backButton;
 
     private TransactionDAO transactionDAO;
     private CategoryDAOImpl categoryDAO;
@@ -64,7 +65,7 @@ public class EditTransactionController {
 
         // Load categories for the selected type
         updateCategoryComboBox(transaction.getType());
-        categoryComboBox.getSelectionModel().select(transaction.getCategory());
+        categoryComboBox.getSelectionModel().select(categoryMap.get(transaction.getCategory()));
     }
 
     private void updateCategoryComboBox(TransactionType type) {
@@ -88,7 +89,7 @@ public class EditTransactionController {
 
             transaction.setDescription(description);
             transaction.setType(type);
-            transaction.setCategory(category);
+            transaction.setCategory(categoryMap.get(category));
             transaction.setAmount(amount);
             transaction.setTransactionDate(date);
 
@@ -108,9 +109,10 @@ public class EditTransactionController {
     }
 
     private void cancelEdit() {
+//    	TransactionHistoryController.initialize();
         closeWindow();
     }
-
+    
     private void closeWindow() {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();

@@ -111,7 +111,10 @@ public class TransactionHistoryController {
             e.printStackTrace();
         }
     }
-
+    @FXML
+    private void refresh(ActionEvent event) {
+    	loadTransactionData();
+    }
     @FXML
     private void handleSearchAction(ActionEvent event) {
         String searchTerm = searchTextField.getText();
