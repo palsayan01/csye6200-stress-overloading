@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.Label?>
+
+<TabPane xmlns:fx="http://javafx.com/fxml" fx:controller="main.java.csye6200.controllers.ReportsController">
+    <Tab text="Monthly Spending Report">
+        <VBox spacing="10" alignment="TOP_CENTER">
+            <Label text="Monthly Spending Breakdown" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            <PieChart fx:id="monthlySpendingPieChart" prefWidth="600" prefHeight="400" />
+        </VBox>
+    </Tab>
+    <Tab text="Yearly Income vs Expense Report">
+        <VBox spacing="10" alignment="TOP_CENTER">
+            <Label text="Yearly Income vs Expense" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            <BarChart fx:id="yearlyBarChart" prefWidth="600" prefHeight="300">
+                <xAxis>
+                    <CategoryAxis fx:id="barChartXAxis" />
+                </xAxis>
+                <yAxis>
+                    <NumberAxis fx:id="barChartYAxis" />
+                </yAxis>
+            </BarChart>
+            <LineChart fx:id="yearlyLineChart" prefWidth="600" prefHeight="300">
+                <xAxis>
+                    <CategoryAxis fx:id="lineChartXAxis" />
+                </xAxis>
+                <yAxis>
+                    <NumberAxis fx:id="lineChartYAxis" />
+                </yAxis>
+            </LineChart>
+        </VBox>
+    </Tab>
+    <Tab text="Top Spending Categories">
+        <VBox spacing="10" alignment="TOP_CENTER">
+            <Label text="Top Spending Categories" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            <PieChart fx:id="topSpendingPieChart" prefWidth="600" prefHeight="400" />
+        </VBox>
+    </Tab>
+</TabPane>
