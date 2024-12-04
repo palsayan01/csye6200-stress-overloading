@@ -19,6 +19,7 @@ import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.models.Transaction;
 import main.java.csye6200.models.Category;
 import main.java.csye6200.models.TransactionType;
+import main.java.csye6200.utils.SessionManager;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
@@ -84,6 +85,7 @@ public class TransactionHistoryController implements Initializable  {
     private TransactionHistoryDAO transactionHistoryDAO;
     private CategoryDAOImpl categoryDAO;
     private Map<String, String> categoryMap; 
+    private String userid = SessionManager.getInstance().getUserId();
 
     public void initialize() {
         try {
@@ -93,7 +95,6 @@ public class TransactionHistoryController implements Initializable  {
             categoryDAO = new CategoryDAOImpl(new DatabaseConnect());
             categoryMap = categoryDAO.getAllCategories();
             System.out.println(categoryMap);
-//            categoryComboBox.getItems().setAll(categoryMap.keySet()); 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -101,9 +102,8 @@ public class TransactionHistoryController implements Initializable  {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-//        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         categoryColumn.setCellValueFactory(cellData -> {
-            String categoryKey = cellData.getValue().getCategory(); // Assuming 'getCategory()' gets the key
+            String categoryKey = cellData.getValue().getCategory(); 
             String categoryValue = categoryMap.get(categoryKey);
             System.out.println(categoryKey);
             System.out.println("categoryId" + categoryMap.get(categoryKey));
@@ -119,7 +119,7 @@ public class TransactionHistoryController implements Initializable  {
 
     private void loadTransactionData() {
         try {
-            List<Transaction> transactions = transactionHistoryDAO.getAllTransactions();
+            List<Transaction> transactions = transactionHistoryDAO.getAllTransactions(userid);
             transactionList.clear();
             transactionList.addAll(transactions);
             transactionTable.setItems(transactionList);
@@ -137,7 +137,7 @@ public class TransactionHistoryController implements Initializable  {
         String filter = filterComboBox.getValue();
 
         try {
-            List<Transaction> transactions = transactionHistoryDAO.searchTransactions(searchTerm, filter);
+            List<Transaction> transactions = transactionHistoryDAO.searchTransactions(searchTerm, filter, userid);
             transactionList.clear();
             transactionList.addAll(transactions);
             transactionTable.setItems(transactionList);

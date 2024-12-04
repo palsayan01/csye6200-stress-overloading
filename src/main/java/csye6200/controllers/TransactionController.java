@@ -12,6 +12,7 @@ import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.dao.TransactionDAO;
 import main.java.csye6200.models.Transaction;
 import main.java.csye6200.models.TransactionType;
+import main.java.csye6200.utils.SessionManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
@@ -34,6 +35,7 @@ public class TransactionController implements Initializable{
     private TransactionDAO transactionDAO;
     private Map<String, String> categoryMap; 
     private CategoryDAOImpl categoryDAO;
+    private String uid = SessionManager.getInstance().getUserId();
     @FXML
     public void initialize() {
         try {
@@ -80,8 +82,7 @@ public class TransactionController implements Initializable{
         
         String categoryId = categoryMap.get(category);
         
-        System.out.println(description + amount +  date +  categoryId + type);
-        Transaction transaction = new Transaction(description, amount, date, categoryId, type);
+        Transaction transaction = new Transaction(description, amount, date, categoryId, type, uid);
 
         try {
             boolean success = transactionDAO.addTransaction(transaction);
