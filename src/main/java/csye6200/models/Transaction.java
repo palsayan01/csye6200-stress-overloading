@@ -9,24 +9,27 @@ public class Transaction {
     private double amount;             
     private LocalDate transactionDate; 
     private String category;        
-    private TransactionType type;      
+    private TransactionType type;   
+    private String userid;
     public static int count = 0;
     // Constructor
-    public Transaction(String description, double amount, LocalDate transactionDate, String category, TransactionType type) {
+    public Transaction(String description, double amount, LocalDate transactionDate, String category, TransactionType type, String userid) {
         this.id = UUID.randomUUID().toString();
         this.description = description;
         this.amount = amount;
         this.transactionDate = transactionDate;
         this.category = category;
         this.type = type;
+        this.userid = userid;
     }
-    public Transaction(String id, String description, double amount, LocalDate transactionDate, String category, TransactionType type) {
+    public Transaction(String id, String description, double amount, LocalDate transactionDate, String category, TransactionType type, String userid) {
         this.id = id;
         this.description = description;
         this.amount = amount;
         this.transactionDate = transactionDate;
         this.category = category;
         this.type = type;
+        this.userid = userid;
     }
 
     // Getters and Setters
@@ -83,4 +86,10 @@ public class Transaction {
         return "Transaction [id=" + id + ", description=" + description + ", amount=" + amount + ", transactionDate=" + transactionDate
                 + ", category=" + category + ", type=" + type + "]";
     }
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
 }

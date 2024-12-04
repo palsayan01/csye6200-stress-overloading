@@ -17,14 +17,16 @@ public class TransactionHistoryDAO {
     }
 
     // Fetch all transactions
-    public List<Transaction> getAllTransactions() throws SQLException {
+    public List<Transaction> getAllTransactions(String userid) throws SQLException {
         List<Transaction> transactions = new ArrayList<>();
-        String query = "SELECT * FROM transactions";
+        String query = "SELECT * FROM transactions WHERE userid = ?";
+        
         ResultSet resultSet = null;
 
         try {
         	System.out.print(query);
             PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, userid);
             resultSet = statement.executeQuery();
             
             while (resultSet.next()) {
@@ -34,7 +36,8 @@ public class TransactionHistoryDAO {
                         resultSet.getDouble("amount"),
                         resultSet.getDate("transaction_date").toLocalDate(),
                         resultSet.getString("category_id"),
-                        TransactionType.valueOf(resultSet.getString("transaction_type"))
+                        TransactionType.valueOf(resultSet.getString("transaction_type")),
+                        userid
                 );
                 transactions.add(transaction);
             }
@@ -50,43 +53,47 @@ public class TransactionHistoryDAO {
     }
 
     // Search and filter transactions by description and type
-    public List<Transaction> searchTransactions(String searchTerm, String filter) throws SQLException {
+    public List<Transaction> searchTransactions(String searchTerm, String filter, String userid) throws SQLException {
         List<Transaction> transactions = new ArrayList<>();
-        String query = "SELECT * FROM transactions WHERE description LIKE ?";
-        if (filter != null && !filter.equals("All")) {
+        String query = "SELECT * FROM transactions WHERE userid = ? AND description LIKE ?";
+        if (filter != null && !filter.equalsIgnoreCase("All")) {
             query += " AND transaction_type = ?";
         }
 
         ResultSet resultSet = null;
 
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, "%" + searchTerm + "%");
-            if (filter != null && !filter.equals("All")) {
-                statement.setString(2, filter.toUpperCase());
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, userid); // Set the userid parameter
+            statement.setString(2, "%" + searchTerm + "%"); // Set the description parameter
+
+            if (filter != null && !filter.equalsIgnoreCase("All")) {
+                statement.setString(3, filter.toUpperCase()); // Set the transaction_type parameter
             }
+
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 Transaction transaction = new Transaction(
-                		resultSet.getString("description"),
-                        resultSet.getDouble("amount"),
-                        resultSet.getDate("transaction_date").toLocalDate(),
-                        resultSet.getString("category_id"),
-                        TransactionType.valueOf(resultSet.getString("transaction_type"))
+                    resultSet.getString("description"),
+                    resultSet.getDouble("amount"),
+                    resultSet.getDate("transaction_date").toLocalDate(),
+                    resultSet.getString("category_id"),
+                    TransactionType.valueOf(resultSet.getString("transaction_type")),
+                    resultSet.getString("userid") // Use the `userid` from the database
                 );
                 transactions.add(transaction);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Log exception (Consider using a logging framework)
         } finally {
             if (resultSet != null) {
-                resultSet.close();
+                resultSet.close(); // Close the ResultSet
             }
         }
 
         return transactions;
     }
+
     // update transaction on edit
     
 

@@ -15,7 +15,7 @@ public class Main extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("/main/resources/fxml/LoginPage.fxml"));
 //			BorderPane root = new BorderPane();
 			Scene scene = new Scene(root,primaryStage.getWidth(), primaryStage.getHeight());
-			scene.getStylesheets().add(getClass().getResource("/main/resources/css/application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("/main/resources/css/style.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setMaximized(true);
 			primaryStage.show();

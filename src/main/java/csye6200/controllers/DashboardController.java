@@ -39,7 +39,8 @@ public class DashboardController {
     	
         // Add button actions
     	btnBudgetandGoal.setOnAction(e -> loadScreen("budgetgoal-home"));
-    	btnAddTransaction.setOnAction(e -> loadScreen("transactionHistory"));
+    	btnAddTransaction.setOnAction(e -> loadScreen("addTransaction"));
+    	btnHistory.setOnAction(e -> loadScreen("transactionHistory"));
     	btnReport.setOnAction(e -> loadScreen("reports"));
     	btnNotifications.setOnAction(e -> loadScreen("notifications"));
 //    	btnLogout.setOnAction(e -> handleLogout());
