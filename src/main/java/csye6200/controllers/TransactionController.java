@@ -1,8 +1,11 @@
 package main.java.csye6200.controllers;
 
 import javafx.fxml.FXML;
-
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import main.java.csye6200.dao.CategoryDAOImpl;
 import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.dao.TransactionDAO;
@@ -11,6 +14,7 @@ import main.java.csye6200.models.TransactionType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -22,6 +26,7 @@ public class TransactionController {
     @FXML private TextField fromToField;
     @FXML private DatePicker datePicker;
     @FXML private Button saveButton;
+    @FXML private Button backButton;
 
     private TransactionDAO transactionDAO;
     private Map<String, String> categoryMap; 
@@ -88,6 +93,16 @@ public class TransactionController {
             ex.printStackTrace();
         }
     }
+    @FXML
+    private void goBack() throws IOException {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/transactionHistory.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
 
+        // Get the current stage and set the new scene
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
 
 }

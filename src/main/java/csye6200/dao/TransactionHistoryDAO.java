@@ -29,6 +29,7 @@ public class TransactionHistoryDAO {
             
             while (resultSet.next()) {
                 Transaction transaction = new Transaction(
+                		resultSet.getString("id"),
                         resultSet.getString("description"),
                         resultSet.getDouble("amount"),
                         resultSet.getDate("transaction_date").toLocalDate(),
@@ -53,7 +54,7 @@ public class TransactionHistoryDAO {
         List<Transaction> transactions = new ArrayList<>();
         String query = "SELECT * FROM transactions WHERE description LIKE ?";
         if (filter != null && !filter.equals("All")) {
-            query += " AND type = ?";
+            query += " AND transaction_type = ?";
         }
 
         ResultSet resultSet = null;
@@ -86,15 +87,19 @@ public class TransactionHistoryDAO {
 
         return transactions;
     }
+    // update transaction on edit
+    
+
 
     // Delete a transaction by its ID
-    public boolean deleteTransaction(int transactionId) throws SQLException {
+    public boolean deleteTransaction(String string) throws SQLException {
         boolean isDeleted = false;
         String query = "DELETE FROM transactions WHERE id = ?";
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, transactionId);
+            statement.setString(1, string);
+            System.out.println(statement);
             int rowsAffected = statement.executeUpdate();
             isDeleted = rowsAffected > 0;
         } catch (SQLException e) {

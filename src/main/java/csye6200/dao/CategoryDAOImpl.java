@@ -16,6 +16,7 @@ public class CategoryDAOImpl {
 	private Connection con;
 	private int result;
 	private ResultSet rs;
+	
 
 	public CategoryDAOImpl(DatabaseConnect dbConnection) {
 		this.dbConnection = dbConnection;
@@ -53,7 +54,7 @@ public class CategoryDAOImpl {
 		
 	}
 	
-	public ResultSet getCategoryById(String id) throws ClassNotFoundException {
+	public String getCategoryById(String id) throws ClassNotFoundException, SQLException {
 		try {
 			con = dbConnection.getConnection();
 			String query = "SELECT CATEGORY_NAME FROM CATEGORY WHERE category_id ==" + id;
@@ -63,8 +64,10 @@ public class CategoryDAOImpl {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return rs;
+		if (rs.next()) {
+            return rs.getString("category_name");
+        }
+		return "Unknown";
 		
 	}
 	
@@ -105,6 +108,29 @@ public class CategoryDAOImpl {
         return categoryMap;
     }
 	
+	
+	public Map<String, String> getAllCategories() throws ClassNotFoundException {
+        Map<String, String> categoryMap = new HashMap<>();
+        
+        try {
+            con = dbConnection.getConnection();
+            String query = "SELECT CATEGORY_ID, CATEGORY_NAME FROM CATEGORY";  // Get both ID and Name
+            PreparedStatement st = con.prepareStatement(query);
+            rs = st.executeQuery();
+            
+            while (rs.next()) {
+                String categoryName = rs.getString("CATEGORY_NAME");
+                String categoryId = rs.getString("CATEGORY_ID");
+                categoryMap.put(categoryId, categoryName);  // Store category name and ID
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        
+        return categoryMap;
+    }
+
 	public ResultSet getCategoryByName(String categoryName) throws ClassNotFoundException {
 		try {
 			con = dbConnection.getConnection();
@@ -121,4 +147,5 @@ public class CategoryDAOImpl {
 		
 	}
 	
+
 }
