@@ -100,41 +100,6 @@ public class TransactionHistoryController {
 
         filterComboBox.setItems(FXCollections.observableArrayList("INCOME", "EXPENSE", "All"));
     }
-//    	 try {
-//    	        DatabaseConnect dbConnect = new DatabaseConnect();
-//    	        Connection connection = dbConnect.getConnection();
-//    	        transactionHistoryDAO = new TransactionHistoryDAO(connection);
-//    	        categoryDAO = new CategoryDAOImpl(dbConnect); // Initialize CategoryDAOImpl
-//    	    } catch (ClassNotFoundException | SQLException e) {
-//    	        e.printStackTrace();
-//    	    }
-//
-//    	    idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-//    	    descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-//    	    typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-//
-//    	    categoryColumn.setCellValueFactory(cellData -> {
-//    	        Transaction transaction = cellData.getValue();
-//    	        String categoryId = transaction.getCategory(); // Assuming `getCategory()` returns category ID.
-//    	        try {
-//    	            // Fetch category name dynamically
-//    	            String categoryName = categoryDAO.getCategoryById(categoryId);
-//    	            return new SimpleStringProperty(categoryName);
-//    	        } catch (SQLException e) {
-//    	            e.printStackTrace();
-//    	            // Fallback in case of an error
-//    	            return new SimpleStringProperty("Unknown Category");
-//    	        }
-//    	    });
-//
-//    	    amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
-//    	    dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-//
-//    	    loadTransactionData();
-//
-//    	    filterComboBox.setItems(FXCollections.observableArrayList("All", "INCOME", "EXPENSE"));
-//    	
-//    }
 
     private void loadTransactionData() {
         try {
@@ -207,6 +172,32 @@ public class TransactionHistoryController {
     @FXML
     private void handleEditAction(ActionEvent event) {
         // Implement editing logic as needed.
-        System.out.println("Edit button pressed");
+    	Transaction selectedTransaction = transactionTable.getSelectionModel().getSelectedItem();
+        if (selectedTransaction != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/editTransaction.fxml"));
+                Parent root = loader.load();
+
+                // Pass the selected transaction to the EditTransactionController
+                EditTransactionController controller = loader.getController();
+                controller.setTransaction(selectedTransaction);
+
+                // Set the scene
+                Stage stage = new Stage();
+                stage.setTitle("Edit Transaction");
+                stage.setScene(new Scene(root));
+                stage.show();
+
+                // Close the current stage
+                ((Stage) editButton.getScene().getWindow()).close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Unable to load edit screen.", ButtonType.OK);
+                alert.showAndWait();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a transaction to edit.", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 }

@@ -20,8 +20,8 @@
             <TableColumn fx:id="typeColumn" prefWidth="70.0" text="Type" />
         </columns>
       </TableView>
-      <Button layoutX="22.0" layoutY="21.0" mnemonicParsing="false" text="Back" />
-      <Button layoutX="461.0" layoutY="281.0" mnemonicParsing="false" text="Edit" />
+      <Button layoutX="22.0" layoutY="21.0" mnemonicParsing="false" text="Back" onAction = "#handleBackAction" />
+      <Button layoutX="461.0" layoutY="281.0" mnemonicParsing="false" text="Edit" onAction= "#handleEditAction"/>
       <Button layoutX="515.0" layoutY="281.0" mnemonicParsing="false" text="Delete" onAction="#handleDeleteAction"/>
       <Button layoutX="390.0" layoutY="281.0" mnemonicParsing="false" text="Search" onAction="#handleSearchAction" />
       <TextField fx:id="searchTextField" layoutX="227.0" layoutY="281.0" />

@@ -1,6 +1,7 @@
 package main.java.csye6200.dao;
 
 import main.java.csye6200.models.Transaction;
+import main.java.csye6200.models.TransactionType;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -28,6 +29,19 @@ public class TransactionDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public boolean updateTransaction(Transaction transaction) throws SQLException {
+        String query = "UPDATE transactions SET description = ?, amount = ?, category_id = ?, transaction_date = ?, transaction_type = ? WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, transaction.getDescription());
+            stmt.setDouble(2, transaction.getAmount());
+            stmt.setString(3, transaction.getCategory());
+            stmt.setDate(4, java.sql.Date.valueOf(transaction.getDate()));
+            stmt.setString(5, transaction.getType().name());
+            stmt.setString(6, transaction.getId());
+            return stmt.executeUpdate() > 0;
         }
     }
 }

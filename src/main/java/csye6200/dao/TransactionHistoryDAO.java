@@ -87,6 +87,9 @@ public class TransactionHistoryDAO {
 
         return transactions;
     }
+    // update transaction on edit
+    
+
 
     // Delete a transaction by its ID
     public boolean deleteTransaction(String string) throws SQLException {
