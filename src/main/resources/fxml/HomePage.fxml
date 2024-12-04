@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.csye6200.controllers.HomeController">
+   <children>
+      <ImageView fitHeight="560.0" fitWidth="900.0" opacity="0.6" pickOnBounds="true" scaleY="1.15">
+         <image>
+            <Image url="@../images/mortgage-3580537_1280.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="welcomeLabel" layoutX="133.0" layoutY="40.0" prefHeight="31.0" prefWidth="333.0" />
+   </children>
+</Pane>
