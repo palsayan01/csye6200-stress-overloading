@@ -1,0 +1,208 @@
+/* General Styling */
+.rootpage {
+    -fx-font-size: 14px;
+    -fx-background-color: lightblue;  /* Light greyish background */
+}
+
+/* Button Styling */
+.clickbutton {
+    -fx-background-color: #ffb300;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-font-family: "Sans-Sherif", sans-serif;
+}
+.clickbutton:hover {
+    -fx-background-color: #ffa000;  /* Darker yellow on hover */
+}
+.clickbutton:pressed {
+    -fx-background-color: #f57f17;  /* Darkest yellow when pressed */
+}
+
+.backbutton {
+    -fx-background-color: grey;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-font-family: "Calibri", sans-serif;
+}
+.backbutton:hover {
+    -fx-background-color: darkgrey;  /* Darker yellow on hover */
+}
+.backbutton:pressed {
+    -fx-background-color: lightgrey;  /* Darkest yellow when pressed */
+}
+
+/* Label Styling */
+.labeltext {
+	-fx-font-family: "Calibri", sans-serif;
+    -fx-text-fill: #333;  /* Dark grey text */
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.sublabeltext {
+	-fx-font-family: "Calibri", sans-serif;
+    -fx-text-fill: #333;  /* Dark grey text */
+    -fx-font-size: 18px;
+}
+
+/* Text Styling */
+.title {
+    -fx-fill: #555;
+    -fx-font-family: "Calibri", sans-serif;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+}
+
+/* TextField and TextArea Styling */
+.text-field, .text-area {
+    -fx-border-color: #d1d1d6;  /* Light grey border */
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 4;
+}
+.text-field:focused, .text-area:focused {
+    -fx-border-color: #ffb300;  /* Yellow focus border */
+}
+
+/* Table Styling */
+.table-view {
+    -fx-border-color: #d1d1d6;  /* Light grey border */
+    -fx-background-color: white;
+    -fx-table-cell-border-color: #f0f0f0;
+    -fx-table-header-border-color: #d1d1d6;
+}
+.table-view .column-header {
+    -fx-background-color: #ffb300;  /* Blue header */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* BorderPane Styling */
+.border-pane {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e5;
+    -fx-border-width: 1;
+}
+
+/* AnchorPane Styling */
+.anchor-pane {
+    -fx-background-color: #f3f3f3;  /* Light grey */
+    -fx-border-color: #e0e0e5;
+    -fx-border-width: 1;
+}
+
+/* TabPane Styling */
+.tab-pane {
+    -fx-tab-min-width: 120px;
+    -fx-tab-max-width: 200px;
+}
+.tab {
+    -fx-background-color: #f9f9f9;  /* Very light grey */
+    -fx-border-color: transparent;
+}
+.tab:selected {
+    -fx-background-color: lightblue;  /* Blue when selected */
+    -fx-text-fill: white;
+}
+
+/* ProgressBar Styling */
+.progressbar {
+    -fx-accent: #ffb300;  /* Yellow progress bar */
+}
+
+/* BarChart Styling */
+.chart-bar {
+    -fx-bar-fill: #ffb300;  /* Yellow bars */
+}
+.chart-legend-item-symbol {
+    -fx-background-color: #ffb300, white;
+    -fx-background-insets: 0, 2;
+}
+
+/* Tooltip Styling */
+.tooltip {
+    -fx-background-color: #333;  /* Dark background for tooltips */
+    -fx-text-fill: white;
+    -fx-padding: 8;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+/* Hover Effects */
+.table-row-cell:hover {
+    -fx-background-color: #f0f0f0;  /* Light grey on hover */
+}
+
+/* ComboBox Styling */
+.combobox {
+    -fx-padding: 5;
+    -fx-border-color: #d1d1d6;  /* Light grey border */
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-background-color: white;
+    -fx-font-size: 14px;
+    -fx-font-family: "Calibri", sans-serif;
+}
+
+/* ComboBox when hovered */
+.combobox:hover {
+    -fx-border-color: #0078d7;  /* Blue border on hover */
+    -fx-background-color: #f4f4f9;  /* Light grey background on hover */
+}
+
+/* ComboBox when focused */
+.combobox:focused {
+    -fx-border-color: #ffb300;  /* Yellow border when focused */
+    -fx-background-color: #ffffff;
+}
+
+/* ComboBox Arrow Button */
+.combobox .arrow-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.combobox .arrow-button:hover {
+    -fx-background-color: #f0f0f0;
+}
+.combobox .arrow-button .arrow {
+    -fx-background-color: #333;
+}
+
+/* ComboBox Popup List */
+.combobox-popup {
+    -fx-background-color: white;
+    -fx-border-color: #d1d1d6;  /* Light grey border */
+    -fx-border-width: 1;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+}
+
+/* ListCell Styling */
+.listcell {
+    -fx-padding: 8;
+    -fx-text-fill: #333;  /* Dark grey text */
+    -fx-font-size: 14px;
+}
+.listcell:hover {
+    -fx-background-color: #0078d7;  /* Blue on hover */
+    -fx-text-fill: white;
+}
+.listcell:filled:selected, .list-cell:filled:selected:focused {
+    -fx-background-color: #f0f0f0;  /* Yellow when selected */
+    -fx-text-fill: black;
+}
+
+/* Disabled ComboBox */
+.combobox:disabled {
+    -fx-opacity: 0.5;
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ccc;
+}
