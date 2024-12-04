@@ -7,27 +7,33 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.csye6200.controllers.TransactionHistoryController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="722.0" styleClass="rootpage" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.csye6200.controllers.TransactionHistoryController">
    <children>
-      <TableView fx:id="transactionTable" layoutX="36.0" layoutY="63.0" prefHeight="200.0" prefWidth="530.0">
+      <TableView fx:id="transactionTable" layoutX="37.0" layoutY="110.0" prefHeight="200.0" prefWidth="648.0" styleClass="table-view">
         <columns>
-          <TableColumn fx:id="idColumn" prefWidth="62.4000244140625" text="ID" />
-          <TableColumn fx:id="descriptionColumn" prefWidth="121.5999755859375" text="Description" />
+          <TableColumn fx:id="idColumn" prefWidth="33.600040435791016" text="ID" />
+          <TableColumn fx:id="descriptionColumn" prefWidth="151.199951171875" text="Description" />
           <TableColumn fx:id="categoryColumn" prefWidth="83.20001220703125" text="Category" />
-          <TableColumn fx:id="amountColumn" prefWidth="92.00006103515625" text="Amount" />
-          <TableColumn fx:id="dateColumn" minWidth="0.0" prefWidth="98.39996337890625" text="Date" />
-            <TableColumn fx:id="typeColumn" prefWidth="70.0" text="Type" />
+          <TableColumn fx:id="amountColumn" prefWidth="124.79998779296875" text="Amount" />
+          <TableColumn fx:id="dateColumn" minWidth="0.0" prefWidth="109.60003662109375" text="Date" />
+          <TableColumn fx:id="typeColumn" prefWidth="145.5999755859375" text="Type" />
         </columns>
       </TableView>
-      <Button layoutX="22.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleBackAction" text="Back" />
-      <Button layoutX="461.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleEditAction" text="Edit" />
-      <Button layoutX="515.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleDeleteAction" text="Delete" />
-      <Button layoutX="390.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleSearchAction" text="Search" />
-      <TextField fx:id="searchTextField" layoutX="227.0" layoutY="281.0" />
-      <ComboBox fx:id="filterComboBox" layoutX="100.0" layoutY="281.0" prefHeight="25.0" prefWidth="85.0" promptText="" />
-      <Label layoutX="55.0" layoutY="285.0" text="Filter" />
-      <Button fx:id="navigateToAddTransactionButton" layoutX="236.0" layoutY="324.0" mnemonicParsing="false" onAction="#navigateToAddTransaction" text="Add New Transaction" />
-      <Button layoutX="489.0" layoutY="21.0" mnemonicParsing="false" onAction="#refresh" text="Refresh table" />
+      <Button layoutX="22.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleBackAction" styleClass="backbutton" text="Back" />
+      <Button layoutX="561.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleEditAction" styleClass="clickbutton" text="Edit" />
+      <Button layoutX="632.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleDeleteAction" styleClass="clickbutton" text="Delete" />
+      <Button layoutX="445.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleSearchAction" styleClass="clickbutton" text="Search" />
+      <TextField fx:id="searchTextField" layoutX="273.0" layoutY="342.0" styleClass="text-field" />
+      <ComboBox fx:id="filterComboBox" layoutX="91.0" layoutY="342.0" prefHeight="25.0" prefWidth="149.0" promptText="" styleClass="combobox" />
+      <Label layoutX="37.0" layoutY="346.0" styleClass="sublabeltext" text="Filter" />
+      <Button fx:id="navigateToAddTransactionButton" layoutX="283.0" layoutY="387.0" mnemonicParsing="false" onAction="#navigateToAddTransaction" styleClass="clickbutton" text="Add New Transaction" />
+      <Button layoutX="598.0" layoutY="21.0" mnemonicParsing="false" onAction="#refresh" styleClass="clickbutton" text="Refresh table" />
+      <Label layoutX="274.0" layoutY="19.0" prefHeight="55.0" prefWidth="175.0" text="Transaction History">
+         <font>
+            <Font name="Arial Black" size="15.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

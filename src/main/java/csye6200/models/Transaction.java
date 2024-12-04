@@ -9,7 +9,8 @@ public class Transaction {
     private double amount;             
     private LocalDate transactionDate; 
     private String category;        
-    private TransactionType type;      
+    private TransactionType type;   
+    private String user_id;
     public static int count = 0;
     // Constructor
     public Transaction(String description, double amount, LocalDate transactionDate, String category, TransactionType type) {

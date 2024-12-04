@@ -2,6 +2,7 @@ package main.java.csye6200.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -15,10 +16,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-public class TransactionController {
+public class TransactionController implements Initializable{
     @FXML private TextField descriptionField;
     @FXML private ComboBox<TransactionType> typeComboBox;
     @FXML private ComboBox<String> categoryComboBox; // Category is now a String
@@ -104,5 +107,10 @@ public class TransactionController {
         stage.setScene(scene);
         stage.show();
     }
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		initialize();
+	}
 
 }
