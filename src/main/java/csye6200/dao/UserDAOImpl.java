@@ -140,6 +140,28 @@ public class UserDAOImpl {
         }
         return resultSet;  // Return the ResultSet with the user details
     }
+    
+    /**
+     * Method to fetch  user details by id.
+     * @param UserId .
+     * @return user details 
+     * @throws ClassNotFoundException 
+     */
+    public ResultSet getUserDetailsByUserId(String userId) throws ClassNotFoundException {
+        String query = "SELECT firstName, lastName FROM users WHERE userID = ?";
+        ResultSet resultSet = null;
+        
+        try {
+        	con = dbConnection.getConnection();
+        	PreparedStatement preparedStatement = con.prepareStatement(query);
+        	preparedStatement.setString(1, userId);
+        	
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
 
 }
 
