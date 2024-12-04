@@ -52,7 +52,7 @@ public class LoginController implements Initializable  {
 	        });
 	        
 	        // Set the Sign Up link action
-//	        linkSignUp.setOnMouseClicked(event -> navigateToSignUpPage());
+	        linkSignUp.setOnMouseClicked(event -> navigateToSignUpPage());
 	    }
 	    
 	    
@@ -117,23 +117,23 @@ public class LoginController implements Initializable  {
 	    }
 
 //	    // Method to navigate to the sign-up page when the "Sign Up" link is clicked
-//	    private void navigateToSignUpPage() {
-//	        try {
-//	            // Open the SignUp screen (assuming you have a SignUp.fxml)
-//	            Stage signUpStage = new Stage();
-//	            Parent signUpRoot = FXMLLoader.load(getClass().getResource("/main/java/csye6200/views/SignUp.fxml"));
-//	            Scene signUpScene = new Scene(signUpRoot);
-//	            signUpStage.setScene(signUpScene);
-//	            signUpStage.show();
-//
-//	            // Close the current login window
-//	            Stage currentStage = (Stage) linkSignUp.getScene().getWindow();
-//	            currentStage.close();
-//	        } catch (IOException e) {
-//	            e.printStackTrace();
-//	            showAlert(Alert.AlertType.ERROR, "Error loading the sign-up page.");
-//	        }
-//	    }
+	    private void navigateToSignUpPage() {
+	        try {
+	            // Open the SignUp screen (assuming you have a SignUp.fxml)
+	            Stage signUpStage = new Stage();
+	            Parent signUpRoot = FXMLLoader.load(getClass().getResource("/main/resources/fxml/SignUpPage.fxml"));
+	            Scene signUpScene = new Scene(signUpRoot);
+	            signUpStage.setScene(signUpScene);
+	            signUpStage.show();
+
+	            // Close the current login window
+	            Stage currentStage = (Stage) linkSignUp.getScene().getWindow();
+	            currentStage.close();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            showAlert(Alert.AlertType.ERROR, "Error loading the sign-up page.");
+	        }
+	    }
 	    
 	    
 	    // Helper method to show alerts
