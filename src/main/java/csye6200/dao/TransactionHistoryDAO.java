@@ -54,7 +54,7 @@ public class TransactionHistoryDAO {
         List<Transaction> transactions = new ArrayList<>();
         String query = "SELECT * FROM transactions WHERE description LIKE ?";
         if (filter != null && !filter.equals("All")) {
-            query += " AND type = ?";
+            query += " AND transaction_type = ?";
         }
 
         ResultSet resultSet = null;

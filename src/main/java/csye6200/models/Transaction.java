@@ -77,9 +77,6 @@ public class Transaction {
     public void setType(TransactionType type) {
         this.type = type;
     }
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
 
     @Override
     public String toString() {
