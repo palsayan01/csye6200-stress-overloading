@@ -4,16 +4,24 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class Transaction {
-    private String id;                    // Maps to the ID column in the table
-    private String description;        // Maps to the DESCRIPTION column
-    private double amount;             // Maps to the AMOUNT column
-    private LocalDate transactionDate; // Renamed to match the TRANSACTION_DATE column
-    private String category;         // Represents the foreign key CATEGORY_ID
-    private TransactionType type;      // Represents the TYPE column as an enum
+    private String id;                   
+    private String description;        
+    private double amount;             
+    private LocalDate transactionDate; 
+    private String category;        
+    private TransactionType type;      
     public static int count = 0;
     // Constructor
     public Transaction(String description, double amount, LocalDate transactionDate, String category, TransactionType type) {
         this.id = UUID.randomUUID().toString();
+        this.description = description;
+        this.amount = amount;
+        this.transactionDate = transactionDate;
+        this.category = category;
+        this.type = type;
+    }
+    public Transaction(String id, String description, double amount, LocalDate transactionDate, String category, TransactionType type) {
+        this.id = id;
         this.description = description;
         this.amount = amount;
         this.transactionDate = transactionDate;

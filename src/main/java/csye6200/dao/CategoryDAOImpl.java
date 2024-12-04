@@ -16,6 +16,7 @@ public class CategoryDAOImpl {
 	private Connection con;
 	private int result;
 	private ResultSet rs;
+	
 
 	public CategoryDAOImpl(DatabaseConnect dbConnection) {
 		this.dbConnection = dbConnection;
@@ -53,7 +54,7 @@ public class CategoryDAOImpl {
 		
 	}
 	
-	public ResultSet getCategoryById(String id) throws ClassNotFoundException {
+	public String getCategoryById(String id) throws ClassNotFoundException, SQLException {
 		try {
 			con = dbConnection.getConnection();
 			String query = "SELECT CATEGORY_NAME FROM CATEGORY WHERE category_id ==" + id;
@@ -63,8 +64,10 @@ public class CategoryDAOImpl {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return rs;
+		if (rs.next()) {
+            return rs.getString("category_name");
+        }
+		return "Unknown";
 		
 	}
 	

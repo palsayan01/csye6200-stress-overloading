@@ -22,11 +22,11 @@
       </TableView>
       <Button layoutX="22.0" layoutY="21.0" mnemonicParsing="false" text="Back" />
       <Button layoutX="461.0" layoutY="281.0" mnemonicParsing="false" text="Edit" />
-      <Button layoutX="515.0" layoutY="281.0" mnemonicParsing="false" text="Delete" />
-      <Button layoutX="390.0" layoutY="281.0" mnemonicParsing="false" text="Search" />
+      <Button layoutX="515.0" layoutY="281.0" mnemonicParsing="false" text="Delete" onAction="#handleDeleteAction"/>
+      <Button layoutX="390.0" layoutY="281.0" mnemonicParsing="false" text="Search" onAction="#handleSearchAction" />
       <TextField fx:id="searchTextField" layoutX="227.0" layoutY="281.0" />
       <ComboBox fx:id="filterComboBox" layoutX="100.0" layoutY="281.0" prefHeight="25.0" prefWidth="85.0" promptText="INCOME" />
       <Label layoutX="55.0" layoutY="285.0" text="Filter" />
-      <Button layoutX="236.0" layoutY="324.0" mnemonicParsing="false" text="Add New Transaction" />
+      <Button fx:id="navigateToAddTransactionButton" layoutX="236.0" layoutY="324.0" mnemonicParsing="false" onAction="#navigateToAddTransaction" text="Add New Transaction" />
    </children>
 </Pane>

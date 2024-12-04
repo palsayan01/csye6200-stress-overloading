@@ -1,19 +1,30 @@
 package main.java.csye6200.controllers;
 
+import javafx.beans.value.ObservableValue;
+import javafx.beans.property.SimpleStringProperty;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.java.csye6200.dao.TransactionHistoryDAO;
+import main.java.csye6200.dao.CategoryDAOImpl;
 import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.models.Transaction;
 import main.java.csye6200.models.Category;
 import main.java.csye6200.models.TransactionType;
-
+import javafx.scene.Node;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.fxml.FXMLLoader;
+import java.io.IOException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -57,6 +68,9 @@ public class TransactionHistoryController {
     private Button deleteButton;
     
     @FXML
+    private Button navigateToAddTransactionButton;
+    
+    @FXML
     private TableColumn<Transaction, String> fromToColumn;
 
     @FXML
@@ -64,6 +78,7 @@ public class TransactionHistoryController {
 
     private ObservableList<Transaction> transactionList = FXCollections.observableArrayList();
     private TransactionHistoryDAO transactionHistoryDAO;
+    private CategoryDAOImpl categoryDAO;
 
     public void initialize() {
         try {
@@ -85,6 +100,41 @@ public class TransactionHistoryController {
 
         filterComboBox.setItems(FXCollections.observableArrayList("INCOME", "EXPENSE", "All"));
     }
+//    	 try {
+//    	        DatabaseConnect dbConnect = new DatabaseConnect();
+//    	        Connection connection = dbConnect.getConnection();
+//    	        transactionHistoryDAO = new TransactionHistoryDAO(connection);
+//    	        categoryDAO = new CategoryDAOImpl(dbConnect); // Initialize CategoryDAOImpl
+//    	    } catch (ClassNotFoundException | SQLException e) {
+//    	        e.printStackTrace();
+//    	    }
+//
+//    	    idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+//    	    descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+//    	    typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+//
+//    	    categoryColumn.setCellValueFactory(cellData -> {
+//    	        Transaction transaction = cellData.getValue();
+//    	        String categoryId = transaction.getCategory(); // Assuming `getCategory()` returns category ID.
+//    	        try {
+//    	            // Fetch category name dynamically
+//    	            String categoryName = categoryDAO.getCategoryById(categoryId);
+//    	            return new SimpleStringProperty(categoryName);
+//    	        } catch (SQLException e) {
+//    	            e.printStackTrace();
+//    	            // Fallback in case of an error
+//    	            return new SimpleStringProperty("Unknown Category");
+//    	        }
+//    	    });
+//
+//    	    amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+//    	    dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+//
+//    	    loadTransactionData();
+//
+//    	    filterComboBox.setItems(FXCollections.observableArrayList("All", "INCOME", "EXPENSE"));
+//    	
+//    }
 
     private void loadTransactionData() {
         try {
@@ -124,6 +174,22 @@ public class TransactionHistoryController {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    @FXML
+    private void navigateToAddTransaction() {
+        try {
+            // Load the AddTransaction FXML
+        	FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/addTransaction.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            // Create a new stage for the Add Transaction window
+            Stage currentStage = (Stage) navigateToAddTransactionButton.getScene().getWindow();
+            currentStage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Unable to load Add Transaction screen.", ButtonType.OK);
+            alert.showAndWait();
         }
     }
     @FXML
