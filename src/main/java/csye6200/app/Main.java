@@ -12,7 +12,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/main/resources/fxml/addTransaction.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/main/resources/fxml/budgetgoal-home.fxml"));
 //			BorderPane root = new BorderPane();
 			Scene scene = new Scene(root,primaryStage.getWidth(), primaryStage.getHeight());
 			scene.getStylesheets().add(getClass().getResource("/main/resources/css/application.css").toExternalForm());

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1398.0" prefWidth="1273.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.csye6200.controllers.ManageBudgetController">
+   <children>
+      <TabPane layoutX="-5.0" layoutY="121.0" prefHeight="1278.0" prefWidth="1273.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="addBudgetTab" text="Add Budget">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="472.0" layoutY="146.0" prefHeight="23.0" prefWidth="87.0" text="Amount:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="472.0" layoutY="205.0" prefHeight="28.0" prefWidth="85.0" text="Month:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="472.0" layoutY="266.0" prefHeight="17.0" prefWidth="39.0" text="Year:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="amountId" layoutX="571.0" layoutY="138.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </TextField>
+                        <Label layoutX="543.0" layoutY="146.0" text="\$">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="472.0" layoutY="332.0" text="Category:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="budgetSubmitId" layoutX="1068.0" layoutY="477.0" mnemonicParsing="false" onAction="#addBudget" prefHeight="51.0" prefWidth="125.0" text="Submit">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                        <ComboBox fx:id="monthId" layoutX="570.0" layoutY="206.0" prefHeight="32.0" prefWidth="225.0" />
+                        <ComboBox fx:id="yearId" layoutX="570.0" layoutY="263.0" prefHeight="31.0" prefWidth="227.0" />
+                        <ComboBox fx:id="categoryId" layoutX="570.0" layoutY="329.0" prefHeight="34.0" prefWidth="232.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="editBudgetTab" onSelectionChanged="#editTabClick" text="Edit Budget">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="editBudget" layoutX="610.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleEditAction" prefHeight="32.0" prefWidth="125.0" text="Submit">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                        <TableView fx:id="tabViewId" layoutX="275.0" layoutY="102.0" prefHeight="153.0" prefWidth="839.0">
+                          <columns>
+                            <TableColumn fx:id="amountTabId" prefWidth="300.6666564941406" text="Amount" />
+                            <TableColumn fx:id="monthTabId" prefWidth="278.66668701171875" text="Month" />
+                              <TableColumn fx:id="yearTabId" minWidth="0.0" prefWidth="256.66668701171875" text="Year" />
+                          </columns>
+                        </TableView>
+                        <ComboBox fx:id="findCatId" layoutX="275.0" layoutY="55.0" prefWidth="150.0" />
+                        <ComboBox fx:id="findMonthId" layoutX="460.0" layoutY="55.0" prefWidth="150.0" />
+                        <ComboBox fx:id="findYearId" layoutX="642.0" layoutY="55.0" prefWidth="150.0" />
+                        <Button layoutX="919.0" layoutY="273.0" mnemonicParsing="false" onAction="#populateEditFields" prefHeight="30.0" prefWidth="81.0" text="Edit" />
+                        <Button layoutX="1042.0" layoutY="273.0" mnemonicParsing="false" onAction="#handleDeleteAction" prefHeight="29.0" prefWidth="71.0" text="Delete" />
+                        <Label layoutX="290.0" layoutY="361.0" prefHeight="23.0" prefWidth="87.0" text="Amount:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="701.0" layoutY="361.0" prefHeight="28.0" prefWidth="85.0" text="Month:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="290.0" layoutY="411.0" prefHeight="17.0" prefWidth="39.0" text="Year:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="editamountId" layoutX="410.0" layoutY="360.0" prefHeight="29.0" prefWidth="223.0" />
+                        <Label layoutX="372.0" layoutY="361.0" text="\$">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="697.0" layoutY="411.0" text="Category:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="editmonthId" layoutX="788.0" layoutY="362.0" prefHeight="28.0" prefWidth="225.0" />
+                        <ComboBox fx:id="edityearId" layoutX="408.0" layoutY="411.0" prefHeight="27.0" prefWidth="227.0" />
+                        <ComboBox fx:id="editcategoryId" layoutX="789.0" layoutY="411.0" prefHeight="27.0" prefWidth="224.0" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <Label fx:id="labelId" layoutX="14.0" layoutY="39.0" prefHeight="41.0" prefWidth="479.0" text="Manage your budget seamlessly">
+         <font>
+            <Font name="System Bold Italic" size="26.0" />
+         </font>
+      </Label>
+      <Button fx:id="backButtonId" layoutX="1154.0" layoutY="47.0" mnemonicParsing="false" onAction="#goBack" text="Back">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
