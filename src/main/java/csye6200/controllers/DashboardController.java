@@ -32,6 +32,9 @@ public class DashboardController {
     @FXML
     private Button btnNotifications;
     
+    @FXML
+    private Button btnSummary;
+    
     /**
      * Loads Screen 1 into the content area.
      */
@@ -45,6 +48,7 @@ public class DashboardController {
     	btnHistory.setOnAction(e -> loadScreen("transactionHistory"));
     	btnReport.setOnAction(e -> loadScreen("reports"));
     	btnNotifications.setOnAction(e -> loadScreen("notifications"));
+    	btnSummary.setOnAction(e -> loadScreen("SummaryPage"));
     	btnLogout.setOnAction(e -> handleLogout());
     }
     

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/style.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.csye6200.controllers.SummaryController">
+  <tabs>
+    <Tab text="Financial Summary">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" layoutX="105.0" layoutY="41.0" prefHeight="293.0" prefWidth="351.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="38.0" prefWidth="235.0" text="Financial Overview" textFill="#2d13be">
+                           <font>
+                              <Font name="System Bold" size="26.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin></Label>
+                        <HBox prefHeight="47.0" prefWidth="301.0">
+                           <children>
+                              <Label fx:id="totalSavingsLabel" prefHeight="20.0" prefWidth="353.0" style="-fx-font-size: 14px;" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="53.0" prefWidth="351.0">
+                           <children>
+                              <Label fx:id="remainingBudgetLabel" prefHeight="20.0" prefWidth="352.0" style="-fx-font-size: 14px;" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="135.0" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="expenseToIncomeRatioLabel" prefHeight="20.0" prefWidth="351.0" style="-fx-font-size: 14px;" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab text="Budget Utilization Overview">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <HBox prefHeight="352.0" prefWidth="600.0">
+                     <children>
+                        <VBox alignment="TOP_CENTER" prefHeight="352.0" prefWidth="361.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="38.0" prefWidth="255.0" text="Budget Utilization " textFill="#2d13be">
+                                 <font>
+                                    <Font name="System Bold" size="26.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <PieChart fx:id="budgetUtilizationPieChart" prefHeight="224.0" prefWidth="387.0" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="293.0" prefWidth="387.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="38.0" prefWidth="356.0" text="Budget vs Actual" textFill="#2d13be">
+                                 <font>
+                                    <Font name="System Bold" size="26.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <BarChart fx:id="budgetVsActualBarChart">
+                                <xAxis>
+                                  <CategoryAxis fx:id="barChartXAxis" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis fx:id="barChartYAxis" side="LEFT" />
+                                </yAxis>
+                              </BarChart>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Income vs Expense Overview">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" layoutX="43.0" layoutY="41.0" prefHeight="293.0" prefWidth="452.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="38.0" prefWidth="389.0" text="Income vs Expense Overview" textFill="#2d13be">
+                           <font>
+                              <Font name="System Bold" size="26.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                        </Label>
+                        <BarChart fx:id="incomeExpenseBarChart">
+                          <xAxis>
+                            <CategoryAxis fx:id="barChartXAxis" side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis fx:id="barChartYAxis" side="LEFT" />
+                          </yAxis>
+                        </BarChart>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>

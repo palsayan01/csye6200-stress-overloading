@@ -11,7 +11,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.csye6200.controllers.DashboardController">
    <left>
-      <VBox alignment="CENTER" prefHeight="350.0" prefWidth="253.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="281.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnBudgetandGoal" alignment="CENTER" blendMode="SRC_ATOP" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="142.0" style="-fx-text-fill: white; -fx-font-size: 14px; -fx-background-color: #FFCA28; -fx-padding: 10px; -fx-background-radius: 5px;" text="Budget and Goal">
                <VBox.margin>
@@ -38,32 +38,24 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Button>
+            <Button fx:id="btnSummary" alignment="CENTER" blendMode="SRC_ATOP" contentDisplay="CENTER" layoutX="79.0" layoutY="260.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="142.0" style="-fx-text-fill: white; -fx-font-size: 14px; -fx-background-color: #FFCA28; -fx-padding: 10px; -fx-background-radius: 5px;" text="Summary" />
          </children>
       </VBox>
    </left>
    <center>
-      <StackPane fx:id="contentArea" prefHeight="365.0" prefWidth="347.0" BorderPane.alignment="CENTER">
+      <StackPane fx:id="contentArea" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard" wrappingWidth="132.13671624660492" />
-            <HBox fillHeight="false" prefHeight="364.0" prefWidth="347.0">
+            <HBox>
                <children>
-                  <Separator halignment="LEFT" orientation="VERTICAL" prefHeight="340.0" prefWidth="0.0" />
+                  <Separator halignment="LEFT" orientation="VERTICAL" prefHeight="400.0" prefWidth="0.0" />
                </children>
-               <StackPane.margin>
-                  <Insets />
-               </StackPane.margin>
-               <padding>
-                  <Insets bottom="20.0" />
-               </padding>
             </HBox>
          </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
       </StackPane>
    </center>
    <top>
-      <Button fx:id="btnLogout" alignment="CENTER" blendMode="SRC_ATOP" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="17.0" prefWidth="113.0" style="-fx-text-fill: white; -fx-font-size: 14px; -fx-background-color: #FFCA28; -fx-padding: 10px; -fx-background-radius: 5px;" text="Log Out" BorderPane.alignment="TOP_RIGHT">
+      <Button fx:id="btnLogout" alignment="TOP_CENTER" blendMode="SRC_ATOP" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="142.0" style="-fx-text-fill: white; -fx-font-size: 14px; -fx-background-color: #FFCA28; -fx-padding: 10px; -fx-background-radius: 5px;" text="LogOut" BorderPane.alignment="CENTER_RIGHT">
          <BorderPane.margin>
             <Insets right="10.0" top="10.0" />
          </BorderPane.margin>
