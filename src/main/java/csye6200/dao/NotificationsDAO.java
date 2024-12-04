@@ -1,6 +1,7 @@
 package main.java.csye6200.dao;
 
 import main.java.csye6200.models.*;
+import main.java.csye6200.utils.SessionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,12 +15,12 @@ public class NotificationsDAO {
 	private Connection connection;
 
     public NotificationsDAO() throws SQLException, ClassNotFoundException {
-        connection = new DatabaseConnect().getConnection();
+        connection = DatabaseConnect.getInstance().getConnection();
     }
 
     public List<Notifications> getBudgetThresholdNotifications() {
         List<Notifications> notifications = new ArrayList<>();
-        String query = """
+        String query = String.format("""
             SELECT 
                 c.CATEGORY_NAME, 
                 b.AMOUNT, 
@@ -30,9 +31,10 @@ public class NotificationsDAO {
             INNER JOIN
 			    CATEGORY c ON b.CATEGORY_ID = c.CATEGORY_ID
 			WHERE
+        		b.USERID = '%s' AND
 			    UPPER(TRIM(b.MONTH)) = UPPER(TRIM(TO_CHAR(CURRENT_DATE, 'Month')))
 			    AND b.YEAR = EXTRACT(YEAR FROM CURRENT_DATE)
-        """;
+        """, SessionManager.getInstance().getUserId());
 
         try (PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
@@ -63,7 +65,7 @@ public class NotificationsDAO {
 
     public List<Notifications> getHighExpenseAlerts(double threshold) {
         List<Notifications> notifications = new ArrayList<>();
-        String query = """
+        String query = String.format("""
             SELECT 
                 t.DESCRIPTION, 
                 c.CATEGORY_NAME, 
@@ -73,8 +75,9 @@ public class NotificationsDAO {
             INNER JOIN 
                 CATEGORY c ON t.CATEGORY_ID = c.CATEGORY_ID
             WHERE 
+        		t.USERID = '%s' AND    
                 t.AMOUNT > ?
-        """;
+        """, SessionManager.getInstance().getUserId());
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setDouble(1, threshold);

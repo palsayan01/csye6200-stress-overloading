@@ -89,10 +89,8 @@ public class TransactionHistoryController implements Initializable  {
 
     public void initialize() {
         try {
-            DatabaseConnect dbConnect = new DatabaseConnect();
-            Connection connection = dbConnect.getConnection();
-            transactionHistoryDAO = new TransactionHistoryDAO(connection);
-            categoryDAO = new CategoryDAOImpl(new DatabaseConnect());
+            transactionHistoryDAO = new TransactionHistoryDAO();
+            categoryDAO = new CategoryDAOImpl();
             categoryMap = categoryDAO.getAllCategories();
             System.out.println(categoryMap);
         } catch (ClassNotFoundException | SQLException e) {

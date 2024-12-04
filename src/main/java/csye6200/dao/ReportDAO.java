@@ -1,6 +1,7 @@
 package main.java.csye6200.dao;
 
 import main.java.csye6200.models.*;
+import main.java.csye6200.utils.SessionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,12 +15,12 @@ public class ReportDAO {
 	private Connection connection;
 
     public ReportDAO() throws SQLException, ClassNotFoundException {
-        connection = new DatabaseConnect().getConnection();
+        this.connection = DatabaseConnect.getInstance().getConnection();
     }
     
     public List<MonthlySpending> getMonthlySpending() {
         List<MonthlySpending> spendings = new ArrayList<>();
-        String query = """
+        String query = String.format("""
             SELECT 
                 c.CATEGORY_NAME, 
                 SUM(t.AMOUNT) AS TOTAL_SPENDING
@@ -28,12 +29,13 @@ public class ReportDAO {
             INNER JOIN 
                 CATEGORY c ON t.CATEGORY_ID = c.CATEGORY_ID
             WHERE 
+        		t.USERID = '%s' AND
                 EXTRACT(MONTH FROM t.TRANSACTION_DATE) = EXTRACT(MONTH FROM CURRENT_DATE)
             GROUP BY 
                 c.CATEGORY_NAME
             ORDER BY 
                 TOTAL_SPENDING DESC
-        """;
+        """, SessionManager.getInstance().getUserId());
 
         try (PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
@@ -52,7 +54,7 @@ public class ReportDAO {
 
     public List<YearlyReport> getYearlyIncomeExpense() {
         List<YearlyReport> reports = new ArrayList<>();
-        String query = """
+        String query = String.format("""
             SELECT 
                 TO_CHAR(t.TRANSACTION_DATE, 'Month') AS MONTH,
                 SUM(CASE WHEN t.TRANSACTION_TYPE = 'INCOME' THEN t.AMOUNT ELSE 0 END) AS TOTAL_INCOME,
@@ -62,12 +64,13 @@ public class ReportDAO {
             FROM 
                 TRANSACTIONS t
             WHERE 
+        		t.USERID = '%s' AND
                 EXTRACT(YEAR FROM TO_DATE( t.TRANSACTION_DATE, 'YY-Mon-DD')) = EXTRACT(YEAR FROM CURRENT_DATE)
             GROUP BY 
                 TO_CHAR(t.TRANSACTION_DATE, 'Month')
             ORDER BY 
                 TO_DATE(TO_CHAR(t.TRANSACTION_DATE, 'Month'), 'Month')
-        """;
+        """, SessionManager.getInstance().getUserId());
 
         try (PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
@@ -88,7 +91,7 @@ public class ReportDAO {
 
     public List<CategorySpending> getTopSpendingCategories() {
         List<CategorySpending> categories = new ArrayList<>();
-        String query = """
+        String query = String.format("""
             SELECT 
                 c.CATEGORY_NAME, 
                 SUM(t.AMOUNT) AS TOTAL_SPENDING
@@ -97,13 +100,14 @@ public class ReportDAO {
             INNER JOIN 
                 CATEGORY c ON t.CATEGORY_ID = c.CATEGORY_ID
             WHERE 
+        		t.USERID = '%s' AND
                 t.TRANSACTION_TYPE = 'EXPENSE'
             GROUP BY 
                 c.CATEGORY_NAME
             ORDER BY 
                 TOTAL_SPENDING DESC
             FETCH FIRST 5 ROWS ONLY
-        """;
+        """, SessionManager.getInstance().getUserId());
 
         try (PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {

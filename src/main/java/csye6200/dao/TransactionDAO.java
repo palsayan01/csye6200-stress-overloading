@@ -10,7 +10,7 @@ public class TransactionDAO {
     private Connection connection;
 
     public TransactionDAO() throws SQLException, ClassNotFoundException {
-        connection = new DatabaseConnect().getConnection();
+        connection = DatabaseConnect.getInstance().getConnection();
     }
 
     public boolean addTransaction(Transaction transaction) {

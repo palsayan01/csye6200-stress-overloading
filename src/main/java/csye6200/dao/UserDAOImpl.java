@@ -11,12 +11,11 @@ import main.java.csye6200.models.User;
 
 public class UserDAOImpl {
 
-    private DatabaseConnect dbConnection;
     private Connection con;
     private int result =0;
     
-    public UserDAOImpl(DatabaseConnect dbConnection) {
-        this.dbConnection = dbConnection;
+    public UserDAOImpl() throws ClassNotFoundException, SQLException {
+        this.con = DatabaseConnect.getInstance().getConnection();
     }
     
     /**
@@ -29,8 +28,6 @@ public class UserDAOImpl {
     public int saveUser(User user) throws ClassNotFoundException {
         
 	       try {
-	    	   // Establish connection to the database
-	    	   con = dbConnection.getConnection();
 	    	   
 	    	   //SQL query to insert user record
 	    	   String query = "INSERT INTO users (userID, firstName, lastName, email, password) VALUES (?, ?, ?, ?, ?)";
@@ -63,8 +60,6 @@ public class UserDAOImpl {
     public int userExists(String email) throws ClassNotFoundException {
     	
     	try {
-            // Establish connection to the database
-            con = dbConnection.getConnection();
             
             // SQL query to check if the user with the given email exists
             String query = "SELECT COUNT(*) FROM users WHERE email = ?";
@@ -99,7 +94,6 @@ public class UserDAOImpl {
         String query = "SELECT * FROM users WHERE email = ?";  
 
         try {
-            con = dbConnection.getConnection();
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setString(1, email);
             
@@ -130,7 +124,6 @@ public class UserDAOImpl {
         ResultSet resultSet = null;
         
         try {
-        	  con = dbConnection.getConnection();
               PreparedStatement preparedStatement = con.prepareStatement(query);
               preparedStatement.setString(1, email);
               
@@ -152,7 +145,6 @@ public class UserDAOImpl {
         ResultSet resultSet = null;
         
         try {
-        	con = dbConnection.getConnection();
         	PreparedStatement preparedStatement = con.prepareStatement(query);
         	preparedStatement.setString(1, userId);
         	

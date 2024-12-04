@@ -19,7 +19,7 @@ public class HomeController {
 	@FXML
     public void initialize() throws ClassNotFoundException  {
 		try {
-	        this.userDAO = new UserDAOImpl(new DatabaseConnect());
+	        this.userDAO = new UserDAOImpl();
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -12,19 +12,17 @@ import main.java.csye6200.models.Category;
 
 public class CategoryDAOImpl {
 
-	private DatabaseConnect dbConnection;
 	private Connection con;
 	private int result;
 	private ResultSet rs;
 	
 
-	public CategoryDAOImpl(DatabaseConnect dbConnection) {
-		this.dbConnection = dbConnection;
+	public CategoryDAOImpl() throws SQLException, ClassNotFoundException {
+		this.con = DatabaseConnect.getInstance().getConnection();
 	}
 	
 	public int createCategory(Category cat) throws ClassNotFoundException {
 		try {
-			con = dbConnection.getConnection();
 			String query = "INSERT INTO CATEGORY VALUES (?, ?)";
 			PreparedStatement st = con.prepareStatement(query);
 			st.setString(1, cat.getCategoryId());
@@ -41,7 +39,6 @@ public class CategoryDAOImpl {
 	
 	public ResultSet getCategory() throws ClassNotFoundException {
 		try {
-			con = dbConnection.getConnection();
 			String query = "SELECT CATEGORY_NAME FROM CATEGORY";
 			PreparedStatement st = con.prepareStatement(query);
 			rs = st.executeQuery();
@@ -56,7 +53,6 @@ public class CategoryDAOImpl {
 	
 	public String getCategoryById(String id) throws ClassNotFoundException, SQLException {
 		try {
-			con = dbConnection.getConnection();
 			String query = "SELECT CATEGORY_NAME FROM CATEGORY WHERE category_id ==" + id;
 			PreparedStatement st = con.prepareStatement(query);
 			rs = st.executeQuery();
@@ -76,7 +72,6 @@ public class CategoryDAOImpl {
         System.out.println(type);
         if(type == "INCOME") {
         	try {
-                con = dbConnection.getConnection();
                 String query = "SELECT CATEGORY_ID, CATEGORY_NAME FROM CATEGORY WHERE CATEGORY_NAME = 'Salary'";  // Get both ID and Name
                 PreparedStatement st = con.prepareStatement(query);
                 rs = st.executeQuery();
@@ -92,7 +87,6 @@ public class CategoryDAOImpl {
             }
         } else {
         try {
-            con = dbConnection.getConnection();
 //            String query = "INSERT INTO category (category_id, category_name) VALUES ('ss', 'Salary')";
             String query = "SELECT CATEGORY_ID, CATEGORY_NAME FROM CATEGORY";  // Get both ID and Name
             PreparedStatement st = con.prepareStatement(query);
@@ -117,7 +111,6 @@ public class CategoryDAOImpl {
         Map<String, String> categoryMap = new HashMap<>();
         
         try {
-            con = dbConnection.getConnection();
             String query = "SELECT CATEGORY_ID, CATEGORY_NAME FROM CATEGORY";  // Get both ID and Name
             PreparedStatement st = con.prepareStatement(query);
             rs = st.executeQuery();
@@ -137,7 +130,6 @@ public class CategoryDAOImpl {
 
 	public ResultSet getCategoryByName(String categoryName) throws ClassNotFoundException {
 		try {
-			con = dbConnection.getConnection();
 			String query = "SELECT CATEGORY_ID FROM CATEGORY WHERE CATEGORY_NAME=?";
 			PreparedStatement st = con.prepareStatement(query);
 			st.setString(1, categoryName);

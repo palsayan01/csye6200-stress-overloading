@@ -54,7 +54,7 @@ public class SignUpController implements Initializable {
 		public void initialize(URL arg0, ResourceBundle arg1) {
 			// TODO Auto-generated method stub	
 			try {
-		        this.userDAO = new UserDAOImpl(new DatabaseConnect());
+		        this.userDAO = new UserDAOImpl();
 			} catch (ClassNotFoundException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

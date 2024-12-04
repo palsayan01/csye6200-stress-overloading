@@ -1,5 +1,6 @@
 package main.java.csye6200.controllers;
 
+import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.dao.ReportDAO;
 import main.java.csye6200.dao.TransactionDAO;
 import javafx.collections.FXCollections;
@@ -29,7 +30,7 @@ public class ReportsController {
     private ReportDAO reportDAO;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws ClassNotFoundException, SQLException {
     	try {
 			reportDAO = new ReportDAO();
 		} catch (ClassNotFoundException | SQLException e) {
@@ -40,7 +41,7 @@ public class ReportsController {
         loadTopSpendingCategoriesData();
     }
 
-    private void loadMonthlySpendingData() {
+    private void loadMonthlySpendingData() throws ClassNotFoundException, SQLException {
         List<MonthlySpending> monthlySpendings = reportDAO.getMonthlySpending();
         for (MonthlySpending spending : monthlySpendings) {
             monthlySpendingPieChart.getData().add(
@@ -49,7 +50,7 @@ public class ReportsController {
         }
     }
 
-    private void loadYearlyIncomeExpenseData() {
+    private void loadYearlyIncomeExpenseData() throws ClassNotFoundException, SQLException {
         List<YearlyReport> yearlyReports = reportDAO.getYearlyIncomeExpense();
         XYChart.Series<String, Number> incomeSeries = new XYChart.Series<>();
         incomeSeries.setName("Income");
@@ -68,7 +69,7 @@ public class ReportsController {
         yearlyLineChart.getData().addAll(netSavingsSeries);
     }
 
-    private void loadTopSpendingCategoriesData() {
+    private void loadTopSpendingCategoriesData() throws ClassNotFoundException, SQLException {
         List<CategorySpending> topCategories = reportDAO.getTopSpendingCategories();
         for (CategorySpending category : topCategories) {
             topSpendingPieChart.getData().add(

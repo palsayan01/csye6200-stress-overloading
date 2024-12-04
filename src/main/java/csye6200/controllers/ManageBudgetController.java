@@ -122,8 +122,8 @@ public class ManageBudgetController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		try {
-			this.budgetDAO = new BudgetDAOImpl(new DatabaseConnect());
-			this.categoryDAO = new CategoryDAOImpl(new DatabaseConnect());
+			this.budgetDAO = new BudgetDAOImpl();
+			this.categoryDAO = new CategoryDAOImpl();
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

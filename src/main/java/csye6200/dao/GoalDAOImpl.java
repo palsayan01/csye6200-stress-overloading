@@ -10,18 +10,16 @@ import main.java.csye6200.models.Budget;
 import main.java.csye6200.models.Goal;
 
 public class GoalDAOImpl {
-	private DatabaseConnect dbConnection;
 	private Connection con;
 	private int result;
 	private ResultSet rs;
 
-	public GoalDAOImpl(DatabaseConnect dbConnection) {
-		this.dbConnection = dbConnection;
+	public GoalDAOImpl() throws ClassNotFoundException, SQLException {
+		this.con = DatabaseConnect.getInstance().getConnection();
 	}
 
 	public int createGoal(Goal goal) throws ClassNotFoundException {
 		try {
-			con = dbConnection.getConnection();
 			String query = "INSERT INTO GOAL VALUES (?, ?, ?,?,?,?)";
 			PreparedStatement st = con.prepareStatement(query);
 			java.sql.Date sqlDate = java.sql.Date.valueOf(goal.getDueDate());
@@ -44,7 +42,6 @@ public class GoalDAOImpl {
 	public int checkGoalAchieved(String goalName) throws ClassNotFoundException {
 		try {
 			System.out.println("Inside proc call");
-			con = dbConnection.getConnection();
 			String query = "{call CheckGoalAchievement(?)}";
 			CallableStatement st = con.prepareCall(query);
 			st.setString(1, goalName);
@@ -62,7 +59,6 @@ public class GoalDAOImpl {
 	public ResultSet getProgress(String goalName) throws ClassNotFoundException {
 		// TODO Auto-generated method stub
 		try {
-			con = dbConnection.getConnection();
 			String query = "SELECT PERCENT_ACHIEVED FROM GOAL WHERE GOAL_NAME=? ";
 			PreparedStatement st = con.prepareStatement(query);
 			st.setString(1, goalName);
@@ -78,7 +74,6 @@ public class GoalDAOImpl {
 	
 	public ResultSet goals() throws ClassNotFoundException {
 		try {
-			con = dbConnection.getConnection();
 			String query = "SELECT GOAL_NAME FROM GOAL";
 			PreparedStatement st = con.prepareStatement(query);
 			rs = st.executeQuery();
