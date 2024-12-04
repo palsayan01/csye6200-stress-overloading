@@ -107,4 +107,27 @@ public class CategoryDAOImpl {
         
         return categoryMap;
     }
+	
+	
+	public Map<String, String> getAllCategories() throws ClassNotFoundException {
+        Map<String, String> categoryMap = new HashMap<>();
+        
+        try {
+            con = dbConnection.getConnection();
+            String query = "SELECT CATEGORY_ID, CATEGORY_NAME FROM CATEGORY";  // Get both ID and Name
+            PreparedStatement st = con.prepareStatement(query);
+            rs = st.executeQuery();
+            
+            while (rs.next()) {
+                String categoryName = rs.getString("CATEGORY_NAME");
+                String categoryId = rs.getString("CATEGORY_ID");
+                categoryMap.put(categoryId, categoryName);  // Store category name and ID
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        
+        return categoryMap;
+    }
 }

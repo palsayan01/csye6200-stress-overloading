@@ -28,6 +28,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public class TransactionHistoryController {
 
@@ -41,7 +42,7 @@ public class TransactionHistoryController {
     private TableColumn<Transaction, String> typeColumn;
 
     @FXML
-    private TableColumn<Transaction, Category> categoryColumn;
+    private TableColumn<Transaction, String> categoryColumn;
 
     @FXML
     private TableColumn<Transaction, String> descriptionColumn;
@@ -79,20 +80,32 @@ public class TransactionHistoryController {
     private ObservableList<Transaction> transactionList = FXCollections.observableArrayList();
     private TransactionHistoryDAO transactionHistoryDAO;
     private CategoryDAOImpl categoryDAO;
+    private Map<String, String> categoryMap; 
 
     public void initialize() {
         try {
             DatabaseConnect dbConnect = new DatabaseConnect();
             Connection connection = dbConnect.getConnection();
             transactionHistoryDAO = new TransactionHistoryDAO(connection);
+            categoryDAO = new CategoryDAOImpl(new DatabaseConnect());
+            categoryMap = categoryDAO.getAllCategories();
+            System.out.println(categoryMap);
+//            categoryComboBox.getItems().setAll(categoryMap.keySet()); 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-
+        
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+//        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+        categoryColumn.setCellValueFactory(cellData -> {
+            String categoryKey = cellData.getValue().getCategory(); // Assuming 'getCategory()' gets the key
+            String categoryValue = categoryMap.get(categoryKey);
+            System.out.println(categoryKey);
+            System.out.println("categoryId" + categoryMap.get(categoryKey));
+            return new SimpleStringProperty(categoryValue);
+        });
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
 
