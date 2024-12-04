@@ -130,4 +130,22 @@ public class CategoryDAOImpl {
         
         return categoryMap;
     }
+
+	public ResultSet getCategoryByName(String categoryName) throws ClassNotFoundException {
+		try {
+			con = dbConnection.getConnection();
+			String query = "SELECT CATEGORY_ID FROM CATEGORY WHERE CATEGORY_NAME=?";
+			PreparedStatement st = con.prepareStatement(query);
+			st.setString(1, categoryName);
+			rs = st.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return rs;
+		
+	}
+	
+
 }
