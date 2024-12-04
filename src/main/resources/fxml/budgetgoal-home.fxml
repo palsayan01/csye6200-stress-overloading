@@ -86,7 +86,7 @@
                                     <Image url="@../images/budget.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="addBudgetId" layoutX="169.0" layoutY="304.0" mnemonicParsing="false" onAction="#addBudget" prefHeight="41.0" prefWidth="102.0" text="Add Budget" />
+                              <Button fx:id="addBudgetId" layoutX="169.0" layoutY="304.0" mnemonicParsing="false" onAction="#addBudget" prefHeight="43.0" prefWidth="119.0" text="Manage Budget" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -120,7 +120,6 @@
                                        </children>
                                     </HBox>
                                     <PieChart fx:id="pieChartBudget" prefHeight="233.0" prefWidth="647.0" />
-                                    <Button fx:id="showMoreId" alignment="CENTER" mnemonicParsing="false" text="Show More" />
                                  </children></VBox>
                               <Separator layoutX="600.0" orientation="VERTICAL" prefHeight="354.0" prefWidth="13.0" />
                            </children>
@@ -135,7 +134,7 @@
                                           <Font name="System Bold Italic" size="23.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox prefHeight="27.0" prefWidth="161.0">
+                                    <ComboBox fx:id="goalId" prefHeight="27.0" prefWidth="161.0">
                                        <HBox.margin>
                                           <Insets top="7.0" />
                                        </HBox.margin>

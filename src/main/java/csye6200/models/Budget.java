@@ -9,7 +9,7 @@ public class Budget {
     private double remainingAmount;
     private String month;
     private int year;
-    private Category category;
+    private String category;
 	
 	//Getter and Setter methods
 	public double getAmount() {
@@ -25,11 +25,11 @@ public class Budget {
 		this.remainingAmount = remainingAmount;
 	}
 
-	public Category getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 
@@ -37,8 +37,8 @@ public class Budget {
 		return budgetId;
 	}
 
-	public void setBudgetId() {
-		this.budgetId = UUID.randomUUID().toString();
+	public void setBudgetId(String id) {
+		this.budgetId = id;
 	}
 
 	public String getMonth() {

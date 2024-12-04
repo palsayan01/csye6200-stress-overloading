@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.IntStream;
 
@@ -25,6 +27,7 @@ import javafx.stage.Stage;
 import main.java.csye6200.dao.BudgetDAOImpl;
 import main.java.csye6200.dao.CategoryDAOImpl;
 import main.java.csye6200.dao.DatabaseConnect;
+import main.java.csye6200.dao.GoalDAOImpl;
 
 public class TrackBudgetGoal implements Initializable {
 	@FXML
@@ -52,6 +55,11 @@ public class TrackBudgetGoal implements Initializable {
 	
 	@FXML
 	private Button addGoalId;
+	
+	@FXML
+	private ComboBox<String> goalId;
+
+	private GoalDAOImpl goalDAO;
 
 
 	@Override
@@ -64,8 +72,15 @@ public class TrackBudgetGoal implements Initializable {
 	@FXML
 	private void trackBudget() throws ClassNotFoundException, SQLException {
 		hboxBudget.setVisible(true);
-		goalProgress.setStyle("-fx-accent: green;");
-		goalProgress.setProgress(0.50);
+		//Populate goal dropdown
+		this.goalDAO = new GoalDAOImpl(new DatabaseConnect());
+		rs = goalDAO.goals();
+		List<String> goalList = new ArrayList<>();
+		while(rs.next()) {
+			goalList.add(rs.getString(1));
+		}
+		goalId.getItems().addAll(goalList);
+		
 		
 		monthId.getItems().addAll("January", "February", "March", "April", "May", "June", "July", "August", "September",
 				"October", "November", "December");
@@ -92,8 +107,48 @@ public class TrackBudgetGoal implements Initializable {
 				e.printStackTrace();
 			}
 	    });	
+	    
+	    goalId.setPromptText("Select Goal");
+	    
+	    
+	    goalId.valueProperty().addListener((observable, oldValue, newValue) -> {
+	    	checkGoalReady();
+	    });	
 	}
 	
+	private void checkGoalReady() {
+		if (goalId.getValue() != null) {
+		    try {
+				showProgress();
+			} catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+		    pieChartBudget.getData().clear();
+		}
+		
+	}
+
+	private void showProgress() throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		String goalName = goalId.getValue();
+		Double percent_achieved=0.0;
+		int result = goalDAO.checkGoalAchieved(goalName);
+		if (result>0) {
+			rs = goalDAO.getProgress(goalName);
+			while (rs.next()) {
+				percent_achieved = rs.getDouble(1);
+				
+			}
+			goalProgress.setStyle("-fx-accent: green;");
+			goalProgress.setProgress(percent_achieved);
+		}
+		
+
+		
+	}
+
 	private void updatePieChartIfReady() throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		try {
@@ -111,11 +166,10 @@ public class TrackBudgetGoal implements Initializable {
 
 	private void updatePieChart() throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
+		ResultSet rs2;
 		this.budgetDAO = new BudgetDAOImpl(new DatabaseConnect());
 		month = monthId.getValue();
 		year=yearId.getValue();
-		
-		
 		rs = budgetDAO.getBudgetDetails(month, year);
 		if (!rs.isBeforeFirst()) {
 			pieChartBudget.getData().clear();
@@ -124,10 +178,13 @@ public class TrackBudgetGoal implements Initializable {
 			
 		ObservableList<PieChart.Data> budget = FXCollections.observableArrayList();
 		while(rs.next()) {
-			
+			rs2 = budgetDAO.getTotalExpenseByCategory(rs.getString("category_id"), month, year);
 			String categoryName = rs.getString("category_name");
-			double remainingBudget = rs.getDouble("remaining_amount");
 	        double amount = rs.getDouble("amount");
+	        double remainingBudget = 0;
+			while(rs2.next()) {
+				remainingBudget = amount - rs2.getDouble(1);
+			}
 			String label = String.format("%s (Budget: %.2f)", categoryName, amount);
 			String labelRemaining = String.format("%s (Remaining: %.2f)", categoryName, remainingBudget);
 			budget.add(new PieChart.Data(label, amount));
@@ -141,7 +198,7 @@ public class TrackBudgetGoal implements Initializable {
 
 	@FXML
 	private void addBudget() throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/setBudget.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/manageBudget.fxml"));
         Parent popupContent = loader.load();
 
         // Create a new stage for the pop-up
