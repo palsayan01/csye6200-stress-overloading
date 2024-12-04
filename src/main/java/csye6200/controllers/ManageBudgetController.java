@@ -259,7 +259,10 @@ public class ManageBudgetController implements Initializable {
 				String category = findCatId.getValue();
 				String month = findMonthId.getValue();
 				int year = findYearId.getValue();
-				populateBudgetTable(category, month, year);
+				boolean hasRecords = populateBudgetTable(category, month, year);
+				if (!hasRecords) {
+					budgetRows.clear();
+				}
 			} else {
 				budgetRows.clear();
 			}
@@ -270,7 +273,7 @@ public class ManageBudgetController implements Initializable {
 		
 	}
 	
-	private void populateBudgetTable(String category, String month, int year) throws ClassNotFoundException {
+	private boolean populateBudgetTable(String category, String month, int year) throws ClassNotFoundException {
 	    try {
 	    	List<Budget> budgetList = new ArrayList<Budget>();
 	        // Fetch data from the database
@@ -296,13 +299,17 @@ public class ManageBudgetController implements Initializable {
 	        	budgetRows.clear();
 	        	budgetRows.addAll(budgetList);
 		        tabViewId.setItems(budgetRows);
-	        }
+		        return true;
+	        }	        
 	        	
 
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        new Alert(Alert.AlertType.ERROR, "Failed to load budgets").showAndWait();
 	    }
+	    return false;
+	    
+	    
 	}
 	
 	@FXML

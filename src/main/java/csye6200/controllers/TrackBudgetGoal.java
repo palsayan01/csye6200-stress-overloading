@@ -199,12 +199,12 @@ public class TrackBudgetGoal implements Initializable {
 	@FXML
 	private void addBudget() throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/manageBudget.fxml"));
-        Parent popupContent = loader.load();
+        Parent parent = loader.load();
 
         // Create a new stage for the pop-up
         Stage popupStage = new Stage();
         popupStage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
-        popupStage.setScene(new Scene(popupContent));
+        popupStage.setScene(new Scene(parent));
         popupStage.showAndWait();
 	}
 	

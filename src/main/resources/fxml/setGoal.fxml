@@ -7,21 +7,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.csye6200.controllers.AddGoalController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="rootpage" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.csye6200.controllers.AddGoalController">
    <children>
-      <Label layoutX="59.0" layoutY="45.0" prefHeight="35.0" prefWidth="231.0" text="Set a new Goal">
+      <Label layoutX="37.0" layoutY="45.0" prefHeight="35.0" prefWidth="231.0" styleClass="title" stylesheets="@../css/style.css" text="Set a new Goal">
          <font>
             <Font name="System Bold Italic" size="25.0" />
          </font>
       </Label>
-      <Button fx:id="backButtonId" layoutX="530.0" layoutY="50.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
-      <Label layoutX="175.0" layoutY="175.0" prefHeight="23.0" prefWidth="87.0" text="Amount:" />
-      <TextField fx:id="amountId" layoutX="245.0" layoutY="174.0" />
-      <Label layoutX="232.0" layoutY="178.0" text="\$" />
-      <Label layoutX="175.0" layoutY="136.0" text="Goal Name:" />
-      <TextField fx:id="goalNameId" layoutX="246.0" layoutY="132.0" />
-      <Label layoutX="175.0" layoutY="216.0" text="Due Date: " />
-      <DatePicker fx:id="dateId" layoutX="246.0" layoutY="212.0" prefHeight="25.0" prefWidth="149.0" />
-      <Button fx:id="goalSubmitId" layoutX="283.0" layoutY="281.0" mnemonicParsing="false" onAction="#addGoal" text="Submit" />
+      <Button fx:id="backButtonId" layoutX="504.0" layoutY="46.0" mnemonicParsing="false" onAction="#goBack" styleClass="backbutton" stylesheets="@../css/style.css" text="Back" />
+      <Label layoutX="154.0" layoutY="186.0" prefHeight="23.0" prefWidth="87.0" styleClass="sublabeltext" stylesheets="@../css/style.css" text="Amount:" />
+      <TextField fx:id="amountId" layoutX="273.0" layoutY="183.0" prefHeight="33.0" prefWidth="165.0" stylesheets="@../css/style.css" />
+      <Label layoutX="254.0" layoutY="187.0" styleClass="sublabeltext" stylesheets="@../css/style.css" text="\$" />
+      <Label layoutX="155.0" layoutY="135.0" styleClass="sublabeltext" stylesheets="@../css/style.css" text="Goal Name:" />
+      <TextField fx:id="goalNameId" layoutX="273.0" layoutY="132.0" prefHeight="33.0" prefWidth="165.0" stylesheets="@../css/style.css" />
+      <Label layoutX="153.0" layoutY="240.0" styleClass="sublabeltext" stylesheets="@../css/style.css" text="Due Date: " />
+      <DatePicker fx:id="dateId" layoutX="273.0" layoutY="237.0" prefHeight="33.0" prefWidth="193.0" stylesheets="@../css/style.css" />
+      <Button fx:id="goalSubmitId" layoutX="264.0" layoutY="295.0" mnemonicParsing="false" onAction="#addGoal" styleClass="clickbutton" stylesheets="@../css/style.css" text="Submit" />
    </children>
 </AnchorPane>
