@@ -65,6 +65,8 @@ public class SignUpController implements Initializable {
 	            firstName.getParent().requestFocus();
 	        });
 			
+	        // Set the Login link action
+	        linkLogin.setOnMouseClicked(event -> navigateToLoginPage());
 		}
 		
 		
@@ -175,18 +177,25 @@ public class SignUpController implements Initializable {
 		    return email.matches(emailRegex);  // Returns true if email matches the regex
 		}
 
-		public void navigateToLoginPage() throws IOException {
+		public void navigateToLoginPage()  {
+			try {
+		        // Close the current login window
+		        Stage stage = (Stage) btnSignup.getScene().getWindow();
+		        stage.close();
+		        // Open the login screen 
+		        Stage loginStage = new Stage();
+		        Parent loginRoot;
+				loginRoot = FXMLLoader.load(getClass().getResource("/main/resources/fxml/LoginPage.fxml"));
+		        Scene dashboardScene = new Scene(loginRoot);
+		        loginStage.setScene(dashboardScene);
+		        loginStage.show();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+	            showAlert(Alert.AlertType.ERROR, "Error loading the login page.");
 
-	        // Close the current login window
-	        Stage stage = (Stage) btnSignup.getScene().getWindow();
-	        stage.close();
+			}
 
-	        // Open the login screen 
-	        Stage loginStage = new Stage();
-	        Parent loginRoot = FXMLLoader.load(getClass().getResource("/main/resources/fxml/LoginPage.fxml"));
-	        Scene dashboardScene = new Scene(loginRoot);
-	        loginStage.setScene(dashboardScene);
-	        loginStage.show();
 
 
 		}
