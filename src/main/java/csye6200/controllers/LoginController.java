@@ -88,17 +88,18 @@ public class LoginController implements Initializable  {
 			            navigateToMainDashboard();
 			            
 			        	}
-		        	else {
-			            showAlert(Alert.AlertType.ERROR, "Invalid email or password.");
-			            emailField.clear();
-			            pwField.clear();
-			        }
+
+		        	
 		        	resultSet.close();
 	        	} catch (SQLException e) {
 	                e.printStackTrace();
 	     }
   	
-	  } 
+	  } else {
+          showAlert(Alert.AlertType.ERROR, "Invalid email or password.");
+          emailField.clear();
+          pwField.clear();
+      }
  }
 
 
