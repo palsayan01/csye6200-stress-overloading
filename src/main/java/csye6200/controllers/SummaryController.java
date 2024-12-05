@@ -49,6 +49,11 @@ public class SummaryController {
 	    
 	    private Connection con;
 	    
+        double totalIncome = 0;
+        double totalExpenses = 0;
+        double totalBudget = 0;
+        double totalRemaining = 0;
+	    
 
 
 	    @FXML
@@ -70,10 +75,7 @@ public class SummaryController {
 	    
 	  
 	    private void loadFinancialSummary(String userId) throws SQLException, ClassNotFoundException {
-	        double totalIncome = 0;
-	        double totalExpenses = 0;
-	        double totalBudget = 0;
-	        double totalRemaining = 0;
+
 
 	        try {
 	            // Fetch all transactions and calculate total income and expenses dynamically across all months
@@ -93,14 +95,18 @@ public class SummaryController {
 	                    totalRemaining += budgetRs.getDouble("remaining_amount");
 	                }
 	            }
-
+	            System.out.println("Total Expense "+totalExpenses);
+	            System.out.println("Total Budget "+totalBudget);
+	            System.out.println("Total Remaining "+totalRemaining);
 	            // Set labels with calculated data
 	            totalSavingsLabel.setText("Total Savings: $" + (totalIncome - totalExpenses));
 	            remainingBudgetLabel.setText("Remaining Budget: $" + (totalRemaining));
 
+	            System.out.println("Total Savings "+(totalIncome - totalExpenses));
 	            // Budget Utilization (Percentage of Budget Spent)
 	            double utilization = (totalBudget > 0) ? (totalExpenses / totalBudget) : 0;
-	            updateBudgetUtilizationPieChart(utilization);
+	            System.out.println("Utilization "+utilization);
+	            updateBudgetUtilizationPieChart(utilization, totalBudget);
 
 	            // Expense to Income Ratio (Percentage of income spent on expenses)
 	            double expenseToIncomeRatio = (totalIncome > 0) ? (totalExpenses / totalIncome) * 100 : 0;
@@ -118,13 +124,21 @@ public class SummaryController {
 	        
 	    }
 	    
-	    private void updateBudgetUtilizationPieChart(double utilization) {
-	        // Budget Utilization Pie Chart
-	        PieChart.Data spentData = new PieChart.Data("Spent", utilization * 100);  // Percentage spent
-	        PieChart.Data remainingData = new PieChart.Data("Remaining", (1 - utilization) * 100);  // Remaining percentage
+	    private void updateBudgetUtilizationPieChart(double utilization, double totalBudget) {
+	    	
+	    	
+	    	double spentAmount = utilization * totalBudget; // Actual spent amount in dollars
+    	    double remainingAmount = totalBudget - spentAmount; // Actual remaining amount in dollars
+    	    double spentPercentage = utilization * 100; // Percentage spent
+    	    double remainingPercentage = (1 - utilization) * 100; // Percentage remaining
 
-	        budgetUtilizationPieChart.getData().clear();
-	        budgetUtilizationPieChart.getData().addAll(spentData, remainingData);
+    	    String spentLabel = String.format("Spent: $%.2f (%.2f%%)", spentAmount, spentPercentage);
+    	    String remainingLabel = String.format("Remaining: $%.2f (%.2f%%)", remainingAmount, remainingPercentage);
+
+    	    budgetUtilizationPieChart.getData().clear();
+    	    budgetUtilizationPieChart.getData().add(new PieChart.Data(spentLabel, spentPercentage));
+    	    budgetUtilizationPieChart.getData().add(new PieChart.Data(remainingLabel, remainingPercentage));
+    	    
 
 	    }
 	    
