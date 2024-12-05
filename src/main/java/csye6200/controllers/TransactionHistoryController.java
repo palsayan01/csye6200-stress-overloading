@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,19 +19,22 @@ import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.models.Transaction;
 import main.java.csye6200.models.Category;
 import main.java.csye6200.models.TransactionType;
+import main.java.csye6200.utils.SessionManager;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-public class TransactionHistoryController {
+public class TransactionHistoryController implements Initializable  {
 
     @FXML
     private TableView<Transaction> transactionTable;
@@ -81,6 +85,7 @@ public class TransactionHistoryController {
     private TransactionHistoryDAO transactionHistoryDAO;
     private CategoryDAOImpl categoryDAO;
     private Map<String, String> categoryMap; 
+    private String userid = SessionManager.getInstance().getUserId();
 
     public void initialize() {
         try {
@@ -90,7 +95,6 @@ public class TransactionHistoryController {
             categoryDAO = new CategoryDAOImpl(new DatabaseConnect());
             categoryMap = categoryDAO.getAllCategories();
             System.out.println(categoryMap);
-//            categoryComboBox.getItems().setAll(categoryMap.keySet()); 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -98,9 +102,8 @@ public class TransactionHistoryController {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-//        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         categoryColumn.setCellValueFactory(cellData -> {
-            String categoryKey = cellData.getValue().getCategory(); // Assuming 'getCategory()' gets the key
+            String categoryKey = cellData.getValue().getCategory(); 
             String categoryValue = categoryMap.get(categoryKey);
             System.out.println(categoryKey);
             System.out.println("categoryId" + categoryMap.get(categoryKey));
@@ -116,7 +119,7 @@ public class TransactionHistoryController {
 
     private void loadTransactionData() {
         try {
-            List<Transaction> transactions = transactionHistoryDAO.getAllTransactions();
+            List<Transaction> transactions = transactionHistoryDAO.getAllTransactions(userid);
             transactionList.clear();
             transactionList.addAll(transactions);
             transactionTable.setItems(transactionList);
@@ -134,7 +137,7 @@ public class TransactionHistoryController {
         String filter = filterComboBox.getValue();
 
         try {
-            List<Transaction> transactions = transactionHistoryDAO.searchTransactions(searchTerm, filter);
+            List<Transaction> transactions = transactionHistoryDAO.searchTransactions(searchTerm, filter, userid);
             transactionList.clear();
             transactionList.addAll(transactions);
             transactionTable.setItems(transactionList);
@@ -216,4 +219,10 @@ public class TransactionHistoryController {
             alert.showAndWait();
         }
     }
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		initialize();
+	}
 }

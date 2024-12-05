@@ -7,21 +7,20 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="415.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.csye6200.controllers.EditTransactionController">
+<Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="415.0" styleClass="rootpage" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.csye6200.controllers.EditTransactionController">
    <children>
       <Label layoutX="171.0" layoutY="26.0" text="Edit Transaction" />
-      <Label layoutX="116.0" layoutY="59.0" text="Description:" />
-      <TextField fx:id="descriptionField" layoutX="201.0" layoutY="55.0" />
-      <Label layoutX="133.0" layoutY="101.0" text="Type:" />
-      <ComboBox fx:id="typeComboBox" layoutX="201.0" layoutY="97.0" prefHeight="25.0" prefWidth="149.0" />
-      <Label layoutX="122.0" layoutY="141.0" text="Category:" />
-      <ComboBox fx:id="categoryComboBox" layoutX="201.0" layoutY="137.0" prefHeight="25.0" prefWidth="149.0" />
-      <Label layoutX="125.0" layoutY="176.0" text="Amount:" />
-      <TextField fx:id="amountField" layoutX="201.0" layoutY="172.0" />
-      <Label layoutX="134.0" layoutY="218.0" text="Date:" />
-      <DatePicker fx:id="datePicker" layoutX="201.0" layoutY="214.0" prefHeight="25.0" prefWidth="149.0" />
-      <Button fx:id="saveButton" layoutX="152.0" layoutY="263.0" mnemonicParsing="false" text="Save" />
-      <Button fx:id="cancelButton" layoutX="213.0" layoutY="263.0" mnemonicParsing="false" text="Cancel" />
-      
+      <Label layoutX="107.0" layoutY="62.0" text="Description:" />
+      <TextField fx:id="descriptionField" layoutX="195.0" layoutY="56.0" prefHeight="33.0" prefWidth="149.0" />
+      <Label layoutX="118.0" layoutY="102.0" text="Type:" />
+      <ComboBox fx:id="typeComboBox" layoutX="195.0" layoutY="97.0" prefHeight="25.0" prefWidth="149.0" />
+      <Label layoutX="105.0" layoutY="142.0" text="Category:" />
+      <ComboBox fx:id="categoryComboBox" layoutX="195.0" layoutY="137.0" prefHeight="25.0" prefWidth="149.0" />
+      <Label layoutX="107.0" layoutY="179.0" text="Amount:" />
+      <TextField fx:id="amountField" layoutX="195.0" layoutY="173.0" prefHeight="33.0" prefWidth="149.0" />
+      <Label layoutX="118.0" layoutY="220.0" text="Date:" />
+      <DatePicker fx:id="datePicker" layoutX="195.0" layoutY="214.0" prefHeight="25.0" prefWidth="149.0" />
+      <Button fx:id="saveButton" layoutX="128.0" layoutY="264.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="86.0" styleClass="clickbutton" text="Save" />
+      <Button fx:id="cancelButton" layoutX="220.0" layoutY="265.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="86.0" styleClass="backbutton" text="Cancel" />
    </children>
 </Pane>

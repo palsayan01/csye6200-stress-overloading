@@ -2,6 +2,7 @@ package main.java.csye6200.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -11,14 +12,17 @@ import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.dao.TransactionDAO;
 import main.java.csye6200.models.Transaction;
 import main.java.csye6200.models.TransactionType;
+import main.java.csye6200.utils.SessionManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-public class TransactionController {
+public class TransactionController implements Initializable{
     @FXML private TextField descriptionField;
     @FXML private ComboBox<TransactionType> typeComboBox;
     @FXML private ComboBox<String> categoryComboBox; // Category is now a String
@@ -31,6 +35,7 @@ public class TransactionController {
     private TransactionDAO transactionDAO;
     private Map<String, String> categoryMap; 
     private CategoryDAOImpl categoryDAO;
+    private String uid = SessionManager.getInstance().getUserId();
     @FXML
     public void initialize() {
         try {
@@ -77,8 +82,7 @@ public class TransactionController {
         
         String categoryId = categoryMap.get(category);
         
-        System.out.println(description + amount +  date +  categoryId + type);
-        Transaction transaction = new Transaction(description, amount, date, categoryId, type);
+        Transaction transaction = new Transaction(description, amount, date, categoryId, type, uid);
 
         try {
             boolean success = transactionDAO.addTransaction(transaction);
@@ -104,5 +108,10 @@ public class TransactionController {
         stage.setScene(scene);
         stage.show();
     }
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		initialize();
+	}
 
 }

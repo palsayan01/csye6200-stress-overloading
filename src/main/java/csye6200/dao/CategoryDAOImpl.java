@@ -73,14 +73,16 @@ public class CategoryDAOImpl {
 	
 	public Map<String, String> getCategories(String type) throws ClassNotFoundException {
         Map<String, String> categoryMap = new HashMap<>();
+        System.out.println(type);
         if(type == "INCOME") {
         	try {
                 con = dbConnection.getConnection();
                 String query = "SELECT CATEGORY_ID, CATEGORY_NAME FROM CATEGORY WHERE CATEGORY_NAME = 'Salary'";  // Get both ID and Name
                 PreparedStatement st = con.prepareStatement(query);
                 rs = st.executeQuery();
-                
+                System.out.println("resa");
                 while (rs.next()) {
+                	System.out.println("resa1");
                     String categoryName = rs.getString("CATEGORY_NAME");
                     String categoryId = rs.getString("CATEGORY_ID");
                     categoryMap.put(categoryName, categoryId);  // Store category name and ID
@@ -91,11 +93,13 @@ public class CategoryDAOImpl {
         } else {
         try {
             con = dbConnection.getConnection();
+//            String query = "INSERT INTO category (category_id, category_name) VALUES ('ss', 'Salary')";
             String query = "SELECT CATEGORY_ID, CATEGORY_NAME FROM CATEGORY";  // Get both ID and Name
             PreparedStatement st = con.prepareStatement(query);
             rs = st.executeQuery();
             
             while (rs.next()) {
+            	System.out.println("resa2");
                 String categoryName = rs.getString("CATEGORY_NAME");
                 String categoryId = rs.getString("CATEGORY_ID");
                 categoryMap.put(categoryName, categoryId);  // Store category name and ID
