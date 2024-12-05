@@ -133,6 +133,20 @@ public class BudgetDAOImpl {
 		return rs;
 	}
 	
+	public ResultSet getAllBudgetDetails() throws SQLException, ClassNotFoundException {
+		 
+		try {
+			String query = "SELECT amount, remaining_amount FROM budget ";
+			PreparedStatement st = con.prepareStatement(query);
+			rs = st.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			return rs;
+ 
+	}
+	
 	
 
 }
