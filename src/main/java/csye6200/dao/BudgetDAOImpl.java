@@ -10,18 +10,16 @@ import main.java.csye6200.models.Budget;
 
 public class BudgetDAOImpl {
 	
-	private DatabaseConnect dbConnection;
 	private Connection con;
 	private int result;
 	private ResultSet rs;
 
-	public BudgetDAOImpl(DatabaseConnect dbConnection) {
-		this.dbConnection = dbConnection;
+	public BudgetDAOImpl() throws ClassNotFoundException, SQLException {
+		this.con = DatabaseConnect.getInstance().getConnection();
 	}
 	
 	public int createBudget(Budget budget) throws ClassNotFoundException {
 		try {
-			con = dbConnection.getConnection();
 			String query = "INSERT INTO BUDGET VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement st = con.prepareStatement(query);
 			st.setString(1, budget.getBudgetId());
@@ -43,7 +41,6 @@ public class BudgetDAOImpl {
 	
 	public ResultSet getBudgetDetails(String month, int year) throws ClassNotFoundException {
 		try {
-			con = dbConnection.getConnection();
 			String query = "select bud.category_id, amount, remaining_amount, cat.category_name from budget bud\r\n"
 					+ "left join category cat\r\n"
 					+ "on bud.category_id = cat.category_id\r\n"
@@ -64,7 +61,6 @@ public class BudgetDAOImpl {
 	public ResultSet getBudgetsByFilters(String month, int year, String categoryId) throws ClassNotFoundException {
 		// TODO Auto-generated method stub
 		try {
-			con = dbConnection.getConnection();
 			String query = "SELECT AMOUNT, MONTH, YEAR, CATEGORY_ID, BUDGET_ID FROM BUDGET WHERE MONTH=? AND YEAR=? AND CATEGORY_ID=? ";
 			PreparedStatement st = con.prepareStatement(query);
 			st.setString(1, month);
@@ -135,6 +131,20 @@ public class BudgetDAOImpl {
 		e.printStackTrace();
 	}
 		return rs;
+	}
+	
+	public ResultSet getAllBudgetDetails() throws SQLException, ClassNotFoundException {
+		 
+		try {
+			String query = "SELECT amount, remaining_amount FROM budget ";
+			PreparedStatement st = con.prepareStatement(query);
+			rs = st.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			return rs;
+ 
 	}
 	
 	

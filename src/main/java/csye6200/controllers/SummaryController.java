@@ -47,25 +47,21 @@ public class SummaryController {
 	    private TransactionHistoryDAO transactionHistoryDAO;
 	    private BudgetDAOImpl budgetDAO;
 	    
+	    private Connection con;
+	    
 
 
 	    @FXML
 	    public void initialize() throws ClassNotFoundException, SQLException {
-	    	
-	    	try (Connection con = new DatabaseConnect().getConnection()) {
+	    	this.con = DatabaseConnect.getInstance().getConnection();
+	    	try {
 	            // Initialize DAO objects with shared connection
-	            transactionHistoryDAO = new TransactionHistoryDAO(con);
-	            budgetDAO = new BudgetDAOImpl(new DatabaseConnect());
+	            transactionHistoryDAO = new TransactionHistoryDAO();
+	            budgetDAO = new BudgetDAOImpl();
 	            
-	            // Get logged-in user ID from the session
-//	            String userId = SessionManager.getInstance().getUserId();
+	            String userId = SessionManager.getInstance().getUserId();
 
-	            // Step 1: Aggregate data for Financial Summary (Income, Expenses, Remaining Budget)
-	            loadFinancialSummary(con);
-//	            loadFinancialSummary(con, userId);
-
-	            // Step 2: Monthly Spending data already implemented (reuse the PieChart from ReportsController)
-	            // Step 3: Yearly Overview data already implemented (reuse the BarChart from ReportsController)
+	            loadFinancialSummary(userId);
 	        } catch (SQLException | ClassNotFoundException e) {
 	            e.printStackTrace();
 	        }
@@ -73,8 +69,7 @@ public class SummaryController {
 	    }
 	    
 	  
-//	    private void loadFinancialSummary(Connection con, String userId) {
-	    private void loadFinancialSummary(Connection con) throws ClassNotFoundException {
+	    private void loadFinancialSummary(String userId) throws SQLException, ClassNotFoundException {
 	        double totalIncome = 0;
 	        double totalExpenses = 0;
 	        double totalBudget = 0;
@@ -82,7 +77,7 @@ public class SummaryController {
 
 	        try {
 	            // Fetch all transactions and calculate total income and expenses dynamically across all months
-	            List<Transaction> transactions = transactionHistoryDAO.getAllTransactions();
+	            List<Transaction> transactions = transactionHistoryDAO.getAllTransactions(userId);
 	            for (Transaction transaction : transactions) {
 	                if (transaction.getType() == TransactionType.INCOME) {
 	                    totalIncome += transaction.getAmount();

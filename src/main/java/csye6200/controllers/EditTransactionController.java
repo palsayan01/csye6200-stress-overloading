@@ -34,7 +34,7 @@ public class EditTransactionController {
     public void initialize() throws ClassNotFoundException, SQLException {
     	try {
             transactionDAO = new TransactionDAO();
-            categoryDAO = new CategoryDAOImpl(new DatabaseConnect());
+            categoryDAO = new CategoryDAOImpl();
 
             // Set default items for ComboBoxes
             typeComboBox.getItems().setAll(TransactionType.values());

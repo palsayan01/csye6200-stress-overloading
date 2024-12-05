@@ -45,7 +45,7 @@ public class AddGoalController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		try {
-			goalDAO = new GoalDAOImpl(new DatabaseConnect());
+			goalDAO = new GoalDAOImpl();
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

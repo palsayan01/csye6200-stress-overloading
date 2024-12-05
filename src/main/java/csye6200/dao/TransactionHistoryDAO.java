@@ -12,8 +12,8 @@ public class TransactionHistoryDAO {
 
     private Connection connection;
 
-    public TransactionHistoryDAO(Connection connection) {
-        this.connection = connection;
+    public TransactionHistoryDAO() throws SQLException, ClassNotFoundException {
+        this.connection = DatabaseConnect.getInstance().getConnection();
     }
 
     // Fetch all transactions

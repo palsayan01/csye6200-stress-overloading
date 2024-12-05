@@ -73,7 +73,7 @@ public class TrackBudgetGoal implements Initializable {
 	private void trackBudget() throws ClassNotFoundException, SQLException {
 		hboxBudget.setVisible(true);
 		//Populate goal dropdown
-		this.goalDAO = new GoalDAOImpl(new DatabaseConnect());
+		this.goalDAO = new GoalDAOImpl();
 		rs = goalDAO.goals();
 		List<String> goalList = new ArrayList<>();
 		while(rs.next()) {
@@ -167,7 +167,7 @@ public class TrackBudgetGoal implements Initializable {
 	private void updatePieChart() throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		ResultSet rs2;
-		this.budgetDAO = new BudgetDAOImpl(new DatabaseConnect());
+		this.budgetDAO = new BudgetDAOImpl();
 		month = monthId.getValue();
 		year=yearId.getValue();
 		rs = budgetDAO.getBudgetDetails(month, year);
