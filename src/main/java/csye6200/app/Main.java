@@ -13,7 +13,6 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/main/resources/fxml/LoginPage.fxml"));
-//			BorderPane root = new BorderPane();
 			Scene scene = new Scene(root,primaryStage.getWidth(), primaryStage.getHeight());
 			scene.getStylesheets().add(getClass().getResource("/main/resources/css/style.css").toExternalForm());
 			primaryStage.setScene(scene);

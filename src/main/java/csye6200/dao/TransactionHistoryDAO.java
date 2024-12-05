@@ -24,6 +24,7 @@ public class TransactionHistoryDAO {
         ResultSet resultSet = null;
 
         try {
+        	  
         	System.out.print(query);
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, userid);
