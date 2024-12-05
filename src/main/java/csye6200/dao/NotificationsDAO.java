@@ -76,7 +76,8 @@ public class NotificationsDAO {
                 CATEGORY c ON t.CATEGORY_ID = c.CATEGORY_ID
             WHERE 
         		t.USERID = '%s' AND    
-                t.AMOUNT > ?
+                t.AMOUNT > ? AND 
+                t.TRANSACTION_TYPE = 'EXPENSE'
         """, SessionManager.getInstance().getUserId());
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {

@@ -10,6 +10,7 @@ public class Budget {
     private String month;
     private int year;
     private String category;
+    private String userID;
 	
 	//Getter and Setter methods
 	public double getAmount() {
@@ -56,9 +57,12 @@ public class Budget {
 	public void setYear(int year) {
 		this.year = year;
 	}
+	public String getUserID() {
+		return userID;
+	}
+	public void setUserID(String userID) {
+		this.userID = userID;
+	}
 	
 	
-	
-    
-    
 }

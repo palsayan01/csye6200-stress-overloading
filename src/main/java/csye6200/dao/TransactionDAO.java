@@ -14,7 +14,7 @@ public class TransactionDAO {
     }
 
     public boolean addTransaction(Transaction transaction) {
-        String sql = "INSERT INTO transactions (id, description, amount, transaction_date, category_id, transaction_type, userid) VALUES (?,?, ?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?, ?)";
+        String sql = "INSERT INTO transactions (id, description, amount, transaction_date, category_id, transaction_type, userid) VALUES (?,?, ?, TO_DATE(?, 'YY-MM-DD'), ?, ?, ?)";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
         	stmt.setString(1,transaction.getId());
@@ -34,7 +34,7 @@ public class TransactionDAO {
     }
 
     public boolean updateTransaction(Transaction transaction) throws SQLException {
-        String query = "UPDATE transactions SET description = ?, amount = ?, category_id = ?, transaction_date = ?, transaction_type = ? WHERE id = ?";
+        String query = "UPDATE transactions SET description = ?, amount = ?, category_id = ?, transaction_date = TO_DATE(?, 'YY-MM-DD'), transaction_type = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, transaction.getDescription());
             stmt.setDouble(2, transaction.getAmount());
