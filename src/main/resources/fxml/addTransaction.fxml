@@ -6,20 +6,26 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.csye6200.controllers.TransactionController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1346.0" prefWidth="1273.0" styleClass="rootpage" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.csye6200.controllers.TransactionController">
    <children>
-      <Button fx:id="saveButton" layoutX="237.0" layoutY="313.0" mnemonicParsing="false" text="Save Transaction" />
-      <Label layoutX="170.0" layoutY="74.0" text="Description" />
-      <TextField fx:id="descriptionField" layoutX="277.0" layoutY="70.0" />
-      <Label layoutX="187.0" layoutY="121.0" text="Type" />
-      <Label layoutX="176.0" layoutY="167.0" text="Category" />
-      <Label layoutX="179.0" layoutY="213.0" text="Amount" />
-      <TextField fx:id="amountField" layoutX="277.0" layoutY="209.0" />
-      <ComboBox fx:id="typeComboBox" layoutX="276.0" layoutY="117.0" prefWidth="150.0" />
-      <ComboBox fx:id="categoryComboBox" layoutX="276.0" layoutY="163.0" prefWidth="150.0" />
-      <DatePicker fx:id="datePicker" layoutX="276.0" layoutY="254.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label layoutX="188.0" layoutY="258.0" text="Date" />
-      <Button fx:id="backButton" layoutX="29.0" layoutY="22.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
+      <Button fx:id="saveButton" layoutX="564.0" layoutY="857.0" mnemonicParsing="false" styleClass="clickbutton" text="Save Transaction" />
+      <Label layoutX="502.0" layoutY="570.0" styleClass="sublabeltext" text="Description" />
+      <TextField fx:id="descriptionField" layoutX="612.0" layoutY="565.0" prefHeight="25.0" prefWidth="149.0" styleClass="text-field" />
+      <Label layoutX="526.0" layoutY="626.0" styleClass="sublabeltext" text="Type" />
+      <Label layoutX="511.0" layoutY="682.0" styleClass="sublabeltext" text="Category" />
+      <Label layoutX="514.0" layoutY="735.0" styleClass="sublabeltext" text="Amount" />
+      <TextField fx:id="amountField" layoutX="612.0" layoutY="730.0" prefHeight="25.0" prefWidth="149.0" styleClass="text-field" />
+      <ComboBox fx:id="typeComboBox" layoutX="612.0" layoutY="617.0" prefHeight="25.0" prefWidth="149.0" styleClass="combobox" />
+      <ComboBox fx:id="categoryComboBox" layoutX="612.0" layoutY="673.0" prefHeight="25.0" prefWidth="149.0" styleClass="combobox" />
+      <DatePicker fx:id="datePicker" layoutX="612.0" layoutY="781.0" prefHeight="25.0" prefWidth="149.0" styleClass="combobox" />
+      <Label layoutX="526.0" layoutY="791.0" styleClass="sublabeltext" text="Date" />
+      <Button fx:id="backButton" layoutX="29.0" layoutY="22.0" mnemonicParsing="false" onAction="#goBack" styleClass="backbutton" text="Back" />
+      <Label layoutX="555.0" layoutY="477.0" text="Add Transaction">
+         <font>
+            <Font name="Arial Black" size="18.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
