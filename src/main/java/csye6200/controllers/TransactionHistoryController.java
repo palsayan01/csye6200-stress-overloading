@@ -30,6 +30,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -108,7 +109,20 @@ public class TransactionHistoryController implements Initializable  {
             return new SimpleStringProperty(categoryValue);
         });
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+//        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yy");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        dateColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                if (empty || date == null) {
+                    setText(null);
+                } else {
+                    setText(dateFormatter.format(date));
+                }
+            }
+        });
 
         loadTransactionData();
 
