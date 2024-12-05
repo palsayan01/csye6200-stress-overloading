@@ -38,6 +38,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Button>
+            <Button fx:id="btnSummary" alignment="CENTER" blendMode="SRC_ATOP" contentDisplay="CENTER" layoutX="79.0" layoutY="260.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="142.0" style="-fx-text-fill: white; -fx-font-size: 14px; -fx-background-color: #FFCA28; -fx-padding: 10px; -fx-background-radius: 5px;" text="Summary" />
          </children>
       </VBox>
    </left>
@@ -53,4 +54,11 @@
          </children>
       </StackPane>
    </center>
+   <top>
+      <Button fx:id="btnLogout" alignment="TOP_CENTER" blendMode="SRC_ATOP" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="142.0" style="-fx-text-fill: white; -fx-font-size: 14px; -fx-background-color: #FFCA28; -fx-padding: 10px; -fx-background-radius: 5px;" text="LogOut" BorderPane.alignment="CENTER_RIGHT">
+         <BorderPane.margin>
+            <Insets right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </Button>
+   </top>
 </BorderPane>
