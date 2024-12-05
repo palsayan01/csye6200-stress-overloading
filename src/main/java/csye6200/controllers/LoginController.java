@@ -88,6 +88,7 @@ public class LoginController implements Initializable  {
 			            navigateToMainDashboard();
 			            
 			        	}
+
 		        	
 		        	resultSet.close();
 	        	} catch (SQLException e) {
