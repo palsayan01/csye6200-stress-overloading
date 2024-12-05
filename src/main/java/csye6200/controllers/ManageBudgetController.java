@@ -32,6 +32,7 @@ import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.models.Budget;
 import main.java.csye6200.models.Category;
 import main.java.csye6200.models.Transaction;
+import main.java.csye6200.utils.SessionManager;
 
 public class ManageBudgetController implements Initializable {
 
@@ -115,12 +116,17 @@ public class ManageBudgetController implements Initializable {
     @FXML
     private Button editBudget;
     private Budget selectedBudget;
+    private String userID;
 	
 	
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		SessionManager session =SessionManager.getInstance();
+		if (session !=null) {
+			userID = session.getUserId();
+		}
 		try {
 			this.budgetDAO = new BudgetDAOImpl();
 			this.categoryDAO = new CategoryDAOImpl();
@@ -191,6 +197,7 @@ public class ManageBudgetController implements Initializable {
 			budget.setMonth(monthId.getValue());
 			budget.setYear(yearId.getValue());
 			budget.setCategory(catId);
+			budget.setUserID(userID);
 
 			result = budgetDAO.createBudget(budget);
 			if (result == 1) {
@@ -281,7 +288,7 @@ public class ManageBudgetController implements Initializable {
 	    	while(rs.next()) {
 				catId = rs.getString(1);
 			}
-	        rs = budgetDAO.getBudgetsByFilters(month, year, catId);
+	        rs = budgetDAO.getBudgetsByFilters(month, year, catId, userID);
 	        while(rs.next()) {
 	        	Budget budget = new Budget();
 	        	budget.setBudgetId(rs.getString(5));
@@ -289,6 +296,7 @@ public class ManageBudgetController implements Initializable {
 	        	budget.setMonth(rs.getString(2));
 	        	budget.setYear(rs.getInt(3));
 	        	budget.setCategory(rs.getString(4));
+	        	budget.setUserID(rs.getString(6));
 	        	System.out.println(rs.getDouble(1));
 	        	
 	        	budgetList.add(budget);
@@ -317,7 +325,7 @@ public class ManageBudgetController implements Initializable {
         selectedBudget = tabViewId.getSelectionModel().getSelectedItem();
         if (selectedBudget != null) {
             try {
-                boolean deleted = budgetDAO.deleteTransaction(selectedBudget.getBudgetId());
+                boolean deleted = budgetDAO.deleteBudget(selectedBudget.getBudgetId());
                 if (deleted) {
                     budgetRows.remove(selectedBudget);
                 }

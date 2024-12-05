@@ -28,6 +28,7 @@ import main.java.csye6200.dao.BudgetDAOImpl;
 import main.java.csye6200.dao.CategoryDAOImpl;
 import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.dao.GoalDAOImpl;
+import main.java.csye6200.utils.SessionManager;
 
 public class TrackBudgetGoal implements Initializable {
 	@FXML
@@ -60,12 +61,26 @@ public class TrackBudgetGoal implements Initializable {
 	private ComboBox<String> goalId;
 
 	private GoalDAOImpl goalDAO;
+	private String userID;
 
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		SessionManager session =SessionManager.getInstance();
+		if (session !=null) {
+			userID = session.getUserId();
+		}
+		try {
+			this.goalDAO = new GoalDAOImpl();
+			this.budgetDAO = new BudgetDAOImpl();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		hboxBudget.setVisible(false);
+		
+		
 		
 	}
 	
@@ -73,8 +88,7 @@ public class TrackBudgetGoal implements Initializable {
 	private void trackBudget() throws ClassNotFoundException, SQLException {
 		hboxBudget.setVisible(true);
 		//Populate goal dropdown
-		this.goalDAO = new GoalDAOImpl();
-		rs = goalDAO.goals();
+		rs = goalDAO.goals(userID);
 		List<String> goalList = new ArrayList<>();
 		while(rs.next()) {
 			goalList.add(rs.getString(1));
@@ -134,9 +148,9 @@ public class TrackBudgetGoal implements Initializable {
 		// TODO Auto-generated method stub
 		String goalName = goalId.getValue();
 		Double percent_achieved=0.0;
-		int result = goalDAO.checkGoalAchieved(goalName);
+		int result = goalDAO.checkGoalAchieved(goalName, userID);
 		if (result>0) {
-			rs = goalDAO.getProgress(goalName);
+			rs = goalDAO.getProgress(goalName, userID);
 			while (rs.next()) {
 				percent_achieved = rs.getDouble(1);
 				
@@ -167,10 +181,9 @@ public class TrackBudgetGoal implements Initializable {
 	private void updatePieChart() throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		ResultSet rs2;
-		this.budgetDAO = new BudgetDAOImpl();
 		month = monthId.getValue();
 		year=yearId.getValue();
-		rs = budgetDAO.getBudgetDetails(month, year);
+		rs = budgetDAO.getBudgetDetails(month, year, userID);
 		if (!rs.isBeforeFirst()) {
 			pieChartBudget.getData().clear();
 			return;
@@ -178,7 +191,7 @@ public class TrackBudgetGoal implements Initializable {
 			
 		ObservableList<PieChart.Data> budget = FXCollections.observableArrayList();
 		while(rs.next()) {
-			rs2 = budgetDAO.getTotalExpenseByCategory(rs.getString("category_id"), month, year);
+			rs2 = budgetDAO.getTotalExpenseByCategory(rs.getString("category_id"), month, year, userID);
 			String categoryName = rs.getString("category_name");
 	        double amount = rs.getDouble("amount");
 	        double remainingBudget = 0;

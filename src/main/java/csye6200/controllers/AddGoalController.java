@@ -14,9 +14,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import main.java.csye6200.dao.CategoryDAOImpl;
 import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.dao.GoalDAOImpl;
 import main.java.csye6200.models.Goal;
+import main.java.csye6200.utils.SessionManager;
 
 public class AddGoalController implements Initializable {
 	
@@ -40,10 +42,15 @@ public class AddGoalController implements Initializable {
 	
 	private GoalDAOImpl goalDAO;
 	private int result;
+	private String userID;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		SessionManager session =SessionManager.getInstance();
+		if (session !=null) {
+			userID = session.getUserId();
+		}
 		try {
 			goalDAO = new GoalDAOImpl();
 		} catch (ClassNotFoundException | SQLException e) {
@@ -80,7 +87,7 @@ public class AddGoalController implements Initializable {
 			goal.setGoalName(goalNameId.getText());
 			goal.setTargetAmount(amount);
 			goal.setDueDate(targetDate);
-			result = goalDAO.createGoal(goal);
+			result = goalDAO.createGoal(goal, userID);
 
 			if (result == 1) {
 				new Alert(Alert.AlertType.CONFIRMATION, "New goal created successfully").showAndWait();

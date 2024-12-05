@@ -87,7 +87,7 @@ public class SummaryController {
 	            }
 
 	            // Fetch budget details across all months and calculate total budget and remaining amount
-	            try (ResultSet budgetRs = budgetDAO.getAllBudgetDetails()) { // Fetching all budget details
+	            try (ResultSet budgetRs = budgetDAO.getAllBudgetDetails(userId)) { // Fetching all budget details
 	                while (budgetRs.next()) {
 	                    totalBudget += budgetRs.getDouble("amount");
 	                    totalRemaining += budgetRs.getDouble("remaining_amount");
