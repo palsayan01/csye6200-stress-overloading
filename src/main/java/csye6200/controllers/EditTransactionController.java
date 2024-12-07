@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import main.java.csye6200.dao.CategoryDAOImpl;
-import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.dao.TransactionDAO;
 import main.java.csye6200.models.Transaction;
 import main.java.csye6200.models.TransactionType;
@@ -16,7 +15,6 @@ import java.time.LocalDate;
 import java.util.Map;
 
 public class EditTransactionController {
-
     @FXML private TextField descriptionField;
     @FXML private ComboBox<TransactionType> typeComboBox;
     @FXML private ComboBox<String> categoryComboBox;
@@ -24,7 +22,6 @@ public class EditTransactionController {
     @FXML private DatePicker datePicker;
     @FXML private Button saveButton;
     @FXML private Button cancelButton;
-//    @FXML private Button backButton;
 
     private TransactionDAO transactionDAO;
     private CategoryDAOImpl categoryDAO;
@@ -32,38 +29,31 @@ public class EditTransactionController {
     private Map<String, String> categoryMap;
 
     public void initialize() throws ClassNotFoundException, SQLException {
-    	try {
+        try {
             transactionDAO = new TransactionDAO();
             categoryDAO = new CategoryDAOImpl();
 
-            // Set default items for ComboBoxes
             typeComboBox.getItems().setAll(TransactionType.values());
-            typeComboBox.valueProperty().addListener(new ChangeListener<TransactionType>() {
-                @Override
-                public void changed(ObservableValue<? extends TransactionType> observable, TransactionType oldValue, TransactionType newValue) {
-                    updateCategoryComboBox(newValue); // Update categories based on the selected type
-                }
-            });
-//            categoryMap = categoryDAO.getCategories();
-//            categoryComboBox.getItems().setAll(categoryMap.keySet()); // Sample categories
-            
+            typeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> updateCategoryComboBox(newValue));
+
+            // Add input validation
+            descriptionField.textProperty().addListener((observable, oldValue, newValue) -> validateDescription());
+            amountField.textProperty().addListener((observable, oldValue, newValue) -> validateAmount());
+            datePicker.valueProperty().addListener((observable, oldValue, newValue) -> validateDate());
+
+            saveButton.setOnAction(e -> saveTransaction());
+            cancelButton.setOnAction(e -> cancelEdit());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        saveButton.setOnAction(e -> saveTransaction());
-        cancelButton.setOnAction(e -> cancelEdit());
     }
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
-
-        // Pre-fill the fields with the transaction details
         descriptionField.setText(transaction.getDescription());
         typeComboBox.getSelectionModel().select(transaction.getType());
         amountField.setText(String.valueOf(transaction.getAmount()));
         datePicker.setValue(transaction.getDate());
-
-        // Load categories for the selected type
         updateCategoryComboBox(transaction.getType());
         categoryComboBox.getSelectionModel().select(categoryMap.get(transaction.getCategory()));
     }
@@ -80,6 +70,10 @@ public class EditTransactionController {
     }
 
     private void saveTransaction() {
+        if (!validateInputs()) {
+            return;
+        }
+
         try {
             String description = descriptionField.getText();
             TransactionType type = typeComboBox.getValue();
@@ -95,24 +89,77 @@ public class EditTransactionController {
 
             boolean success = transactionDAO.updateTransaction(transaction);
             if (success) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Transaction updated successfully!", ButtonType.OK);
-                alert.showAndWait();
-
+                showAlert(Alert.AlertType.INFORMATION, "Transaction updated successfully!");
                 closeWindow();
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Failed to update transaction.", ButtonType.OK);
-                alert.showAndWait();
+                showAlert(Alert.AlertType.ERROR, "Failed to update transaction.");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "An error occurred while updating the transaction.");
         }
     }
 
+    private boolean validateInputs() {
+        return validateDescription() && validateAmount() && validateDate() && validateType() && validateCategory();
+    }
+
+    private boolean validateDescription() {
+        String description = descriptionField.getText().trim();
+        if (description.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Description cannot be empty.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateAmount() {
+        try {
+            double amount = Double.parseDouble(amountField.getText());
+            if (amount <= 0) {
+                showAlert(Alert.AlertType.WARNING, "Amount must be a positive number.");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.WARNING, "Invalid amount. Please enter a valid number.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateDate() {
+        if (datePicker.getValue() == null) {
+            showAlert(Alert.AlertType.WARNING, "Please select a date.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateType() {
+        if (typeComboBox.getValue() == null) {
+            showAlert(Alert.AlertType.WARNING, "Please select a transaction type.");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateCategory() {
+        if (categoryComboBox.getValue() == null) {
+            showAlert(Alert.AlertType.WARNING, "Please select a category.");
+            return false;
+        }
+        return true;
+    }
+
+    private void showAlert(Alert.AlertType alertType, String message) {
+        Alert alert = new Alert(alertType, message, ButtonType.OK);
+        alert.showAndWait();
+    }
+
     private void cancelEdit() {
-//    	TransactionHistoryController.initialize();
         closeWindow();
     }
-    
+
     private void closeWindow() {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();

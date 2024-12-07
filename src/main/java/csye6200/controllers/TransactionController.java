@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import main.java.csye6200.dao.CategoryDAOImpl;
-import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.dao.TransactionDAO;
 import main.java.csye6200.models.Transaction;
 import main.java.csye6200.models.TransactionType;
@@ -22,96 +21,150 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class TransactionController implements Initializable{
+public class TransactionController implements Initializable {
     @FXML private TextField descriptionField;
     @FXML private ComboBox<TransactionType> typeComboBox;
-    @FXML private ComboBox<String> categoryComboBox; // Category is now a String
+    @FXML private ComboBox<String> categoryComboBox;
     @FXML private TextField amountField;
-    @FXML private TextField fromToField;
     @FXML private DatePicker datePicker;
     @FXML private Button saveButton;
     @FXML private Button backButton;
 
     private TransactionDAO transactionDAO;
-    private Map<String, String> categoryMap; 
+    private Map<String, String> categoryMap;
     private CategoryDAOImpl categoryDAO;
     private String uid = SessionManager.getInstance().getUserId();
+
     @FXML
     public void initialize() {
         try {
             transactionDAO = new TransactionDAO();
             categoryDAO = new CategoryDAOImpl();
 
-            // Set default items for ComboBoxes
             typeComboBox.getItems().setAll(TransactionType.values());
-            typeComboBox.valueProperty().addListener(new ChangeListener<TransactionType>() {
-                @Override
-                public void changed(ObservableValue<? extends TransactionType> observable, TransactionType oldValue, TransactionType newValue) {
-                    updateCategoryComboBox(newValue); // Update categories based on the selected type
-                }
-            });
-//            categoryMap = categoryDAO.getCategories();
-//            categoryComboBox.getItems().setAll(categoryMap.keySet()); // Sample categories
-            
+            typeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> updateCategoryComboBox(newValue));
+
+            // Set up input validation
+            setupInputValidation();
+
+            saveButton.setOnAction(e -> saveTransaction());
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        saveButton.setOnAction(e -> saveTransaction());
     }
+
+    private void setupInputValidation() {
+        // Validate amount field to allow only numbers and decimal point
+        amountField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                amountField.setText(oldValue);
+            }
+        });
+
+        // Validate description field to limit length
+        descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() > 100) {
+                descriptionField.setText(oldValue);
+            }
+        });
+
+        // Set default date to today
+        datePicker.setValue(LocalDate.now());
+    }
+
     private void updateCategoryComboBox(TransactionType type) {
-        if (type != null) { 
-
-        try {
-            // Retrieve categories dynamically based on the selected type
-            categoryMap = categoryDAO.getCategories(type.name()); // Assuming type is passed as a string like "INCOME" or "EXPENSE"
-            categoryComboBox.getItems().setAll(categoryMap.keySet()); // Populate ComboBox with category names
-        } catch (Exception e) {
-            e.printStackTrace();
-        }}
+        if (type != null) {
+            try {
+                categoryMap = categoryDAO.getCategories(type.name());
+                categoryComboBox.getItems().setAll(categoryMap.keySet());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
+
     private void saveTransaction() {
+        if (!validateInputs()) {
+            return;
+        }
 
         String description = descriptionField.getText();
         TransactionType type = typeComboBox.getValue();
-        String category = categoryComboBox.getValue();  // Category is a String
+        String category = categoryComboBox.getValue();
         double amount = Double.parseDouble(amountField.getText());
         LocalDate date = datePicker.getValue();
-//        String categoryId = categoryMap.get(category); 
-        
-        
         String categoryId = categoryMap.get(category);
-        
+
         Transaction transaction = new Transaction(description, amount, date, categoryId, type, uid);
 
         try {
             boolean success = transactionDAO.addTransaction(transaction);
             if (success) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Transaction saved successfully!", ButtonType.OK);
-                alert.showAndWait();
+                showAlert(Alert.AlertType.INFORMATION, "Transaction saved successfully!");
+                clearInputs();
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Failed to save transaction.", ButtonType.OK);
-                alert.showAndWait();
+                showAlert(Alert.AlertType.ERROR, "Failed to save transaction.");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "An error occurred while saving the transaction.");
         }
     }
+
+    private boolean validateInputs() {
+        if (descriptionField.getText().trim().isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Please enter a description.");
+            return false;
+        }
+
+        if (typeComboBox.getValue() == null) {
+            showAlert(Alert.AlertType.WARNING, "Please select a transaction type.");
+            return false;
+        }
+
+        if (categoryComboBox.getValue() == null) {
+            showAlert(Alert.AlertType.WARNING, "Please select a category.");
+            return false;
+        }
+
+        if (amountField.getText().trim().isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Please enter an amount.");
+            return false;
+        }
+
+        if (datePicker.getValue() == null) {
+            showAlert(Alert.AlertType.WARNING, "Please select a date.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void showAlert(Alert.AlertType alertType, String message) {
+        Alert alert = new Alert(alertType, message, ButtonType.OK);
+        alert.showAndWait();
+    }
+
+    private void clearInputs() {
+        descriptionField.clear();
+        typeComboBox.getSelectionModel().clearSelection();
+        categoryComboBox.getSelectionModel().clearSelection();
+        amountField.clear();
+        datePicker.setValue(LocalDate.now());
+    }
+
     @FXML
     private void goBack() throws IOException {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/transactionHistory.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/transactionHistory.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-
-        // Get the current stage and set the new scene
         Stage stage = (Stage) backButton.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		initialize();
-	}
 
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        initialize();
+    }
 }
