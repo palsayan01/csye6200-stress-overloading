@@ -3,20 +3,20 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.csye6200.controllers.HomeController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.csye6200.controllers.HomeController">
    <children>
-      <ImageView fitHeight="543.0" fitWidth="973.0" layoutX="-78.0" layoutY="67.0" opacity="0.6" pickOnBounds="true" scaleX="1.15" scaleY="1.2">
+      <ImageView fitHeight="550.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/mortgage-3580537_1280.jpg" />
          </image>
       </ImageView>
-      <Label fx:id="welcomeLabel" layoutX="249.0" layoutY="75.0" prefHeight="31.0" prefWidth="333.0">
+      <Label fx:id="welcomeLabel" alignment="CENTER" maxWidth="560.0" text="Welcome to BudgetBuddy">
          <font>
             <Font name="Californian FB Bold" size="25.0" />
          </font>
@@ -35,6 +35,7 @@
                   </Stop>
                </stops>
             </LinearGradient>
-         </textFill></Label>
+         </textFill>
+      </Label>
    </children>
-</Pane>
+</StackPane>

@@ -117,6 +117,7 @@ public class LoginController implements Initializable  {
 	        Parent dashboardRoot = FXMLLoader.load(getClass().getResource("/main/resources/fxml/Dashboard_main.fxml"));
 	        Scene dashboardScene = new Scene(dashboardRoot);
 	        dashboardStage.setScene(dashboardScene);
+	        dashboardStage.setMaximized(true);
 	        dashboardStage.show();
 	    }
 
@@ -128,6 +129,7 @@ public class LoginController implements Initializable  {
 	            Parent signUpRoot = FXMLLoader.load(getClass().getResource("/main/resources/fxml/SignUpPage.fxml"));
 	            Scene signUpScene = new Scene(signUpRoot);
 	            signUpStage.setScene(signUpScene);
+	            signUpStage.setMaximized(true);
 	            signUpStage.show();
 
 	            // Close the current login window
