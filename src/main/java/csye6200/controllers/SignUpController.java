@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.dao.UserDAOImpl;
 import main.java.csye6200.models.User;
+import main.java.csye6200.utils.AlertUtils;
 
 /**
  * Sign up controller for user account creation logic
@@ -81,51 +82,53 @@ public class SignUpController implements Initializable {
 		    String password = pwField.getText();
 		    String confirmPassword = cpwField.getText();
 		    
+		    Stage currentStage = (Stage) firstName.getScene().getWindow();
+		    
 		    // Check if any field is empty
 		    if (firstNametxt.isEmpty() || lastNametxt.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-		        showAlert(Alert.AlertType.ERROR,"All fields must be filled.");
+		        AlertUtils.showAlert(Alert.AlertType.ERROR,"All fields must be filled.", currentStage);
 		        return;
 		    }
 		    
 		    
 		    //Check for only alphabets in name
         	if (!firstNametxt.matches("[a-zA-Z]+")) {
-        		showAlert(Alert.AlertType.ERROR,"First name should contain only alphabets");
+        		AlertUtils.showAlert(Alert.AlertType.ERROR,"First name should contain only alphabets", currentStage);
         		return;
         	} 
         	
         	if (!lastNametxt.matches("[a-zA-Z]+")) {
-        		showAlert(Alert.AlertType.ERROR,"Last name should contain only alphabets");
+        		AlertUtils.showAlert(Alert.AlertType.ERROR,"Last name should contain only alphabets", currentStage);
         		return;
         	} 
         	
             // Check for valid email format
             if (!isValidEmail(email)) {
-                showAlert(Alert.AlertType.ERROR,"Please enter a valid email address.");
+            	AlertUtils.showAlert(Alert.AlertType.ERROR,"Please enter a valid email address.", currentStage);
                 return;  
             }
 		    	    
 		    // Check for password length and strength (at least 8 characters and includes digits, upper/lowercase, special characters)
 		    if (password.length() < 8) {
-		        showAlert(Alert.AlertType.ERROR,"Password should be at least 8 characters long.");
+		    	AlertUtils.showAlert(Alert.AlertType.ERROR,"Password should be at least 8 characters long.", currentStage);
 		        return;
 		    }
 		    
 		    if (!isPasswordValid(password)) {
-		        showAlert(Alert.AlertType.ERROR,"Password should have at least one lowercase, one uppercase letter, one digit, and one special character.");
+		    	AlertUtils.showAlert(Alert.AlertType.ERROR,"Password should have at least one lowercase, one uppercase letter, one digit, and one special character.", currentStage);
 		        return;
 		    }
 		    
 		    // Validate password match
 		    if (!password.equals(confirmPassword)) {
-		        showAlert(Alert.AlertType.ERROR,"Passwords do not match.");
+		    	AlertUtils.showAlert(Alert.AlertType.ERROR,"Passwords do not match.", currentStage);
 		        return;
 		    }
 		    
 		    // Check if user already exists
 		    int exists = userDAO.userExists(email);  // Use the userExists method to check if email is taken
 		    if (exists == 1) {
-		        showAlert(Alert.AlertType.ERROR,"An account with this email already exists. Please use a different email.");
+		    	AlertUtils.showAlert(Alert.AlertType.ERROR,"An account with this email already exists. Please use a different email.", currentStage);
 		        return;
 		    }
 		    
@@ -141,10 +144,10 @@ public class SignUpController implements Initializable {
 
 		    // If the user was successfully saved to the database, show success, otherwise show failure
 		    if (status == 1) {
-		        showAlert(Alert.AlertType.INFORMATION,"Registration successful!");
+		    	AlertUtils.showAlert(Alert.AlertType.INFORMATION,"Registration successful!", currentStage);
 		        navigateToLoginPage();  // Navigate back to the Login screen
 		    } else {
-		        showAlert(Alert.AlertType.ERROR,"User could not be created. Please try again.");
+		    	AlertUtils.showAlert(Alert.AlertType.ERROR,"User could not be created. Please try again.", currentStage);
 		    }
 		    
 		    
@@ -178,9 +181,9 @@ public class SignUpController implements Initializable {
 		}
 
 		public void navigateToLoginPage()  {
+			Stage stage = (Stage) btnSignup.getScene().getWindow();
 			try {
 		        // Close the current login window
-		        Stage stage = (Stage) btnSignup.getScene().getWindow();
 		        stage.close();
 		        // Open the login screen 
 		        Stage loginStage = new Stage();
@@ -192,21 +195,13 @@ public class SignUpController implements Initializable {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-	            showAlert(Alert.AlertType.ERROR, "Error loading the login page.");
+	            AlertUtils.showAlert(Alert.AlertType.ERROR, "Error loading the login page.", stage);
 
 			}
 
 
 
 		}
-		//Helper function to display alert messages
-	    private void showAlert(Alert.AlertType alertType, String message) {
-	        Alert alert = new Alert(alertType);
-	        alert.setTitle(alertType == Alert.AlertType.ERROR ? "Error" : "Information");
-	        alert.setHeaderText(null);
-	        alert.setContentText(message);
-	        alert.showAndWait();
-	    }
 
 		
 }

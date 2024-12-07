@@ -32,7 +32,7 @@ import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.models.Budget;
 import main.java.csye6200.models.Category;
 import main.java.csye6200.models.Transaction;
-import main.java.csye6200.utils.SessionManager;
+import main.java.csye6200.utils.*;
 
 public class ManageBudgetController implements Initializable {
 
@@ -163,11 +163,12 @@ public class ManageBudgetController implements Initializable {
 
 	@FXML
 	public void addBudget() throws SQLException {
+		Stage currentStage = (Stage) amountId.getScene().getWindow();
 		try {
 			// Validate input
 			if (amountId.getText().isEmpty() || monthId.getValue() == null || yearId.getValue() == null
 					|| categoryId.getValue() == null) {
-				new Alert(Alert.AlertType.WARNING, "Please fill all fields").showAndWait();
+				AlertUtils.showAlert(Alert.AlertType.WARNING, "Please fill all fields", currentStage);
 				return;
 			}
 
@@ -175,11 +176,11 @@ public class ManageBudgetController implements Initializable {
 			try {
 				amount = Double.parseDouble(amountId.getText());
 				if (amount <= 0) {
-					new Alert(Alert.AlertType.ERROR, "Amount must be a positive number").showAndWait();
+					AlertUtils.showAlert(Alert.AlertType.ERROR, "Amount must be a positive number", currentStage);
 	                return;
 	            }
 			} catch (NumberFormatException e) {
-				new Alert(Alert.AlertType.ERROR, "Amount must be a valid number").showAndWait();
+				AlertUtils.showAlert(Alert.AlertType.ERROR, "Amount must be a valid number", currentStage);
                 return;
             }
 			
@@ -201,10 +202,10 @@ public class ManageBudgetController implements Initializable {
 
 			result = budgetDAO.createBudget(budget);
 			if (result == 1) {
-				new Alert(Alert.AlertType.CONFIRMATION, "New budget created successfully").showAndWait();
+				AlertUtils.showAlert(Alert.AlertType.CONFIRMATION, "New budget created successfully", currentStage);
 			}
 			else {
-				new Alert(Alert.AlertType.CONFIRMATION, "Failed to create a new budget").showAndWait();
+				AlertUtils.showAlert(Alert.AlertType.CONFIRMATION, "Failed to create a new budget", currentStage);
             }
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -281,6 +282,7 @@ public class ManageBudgetController implements Initializable {
 	}
 	
 	private boolean populateBudgetTable(String category, String month, int year) throws ClassNotFoundException {
+		Stage currentStage = (Stage) amountId.getScene().getWindow();
 	    try {
 	    	List<Budget> budgetList = new ArrayList<Budget>();
 	        // Fetch data from the database
@@ -313,7 +315,7 @@ public class ManageBudgetController implements Initializable {
 
 	    } catch (SQLException e) {
 	        e.printStackTrace();
-	        new Alert(Alert.AlertType.ERROR, "Failed to load budgets").showAndWait();
+	        AlertUtils.showAlert(Alert.AlertType.ERROR, "Failed to load budgets", currentStage);
 	    }
 	    return false;
 	    
@@ -322,6 +324,7 @@ public class ManageBudgetController implements Initializable {
 	
 	@FXML
     private void handleDeleteAction(ActionEvent event) {
+		Stage currentStage = (Stage) amountId.getScene().getWindow();
         selectedBudget = tabViewId.getSelectionModel().getSelectedItem();
         if (selectedBudget != null) {
             try {
@@ -334,15 +337,16 @@ public class ManageBudgetController implements Initializable {
             }
         }
         else {
-        	new Alert(Alert.AlertType.WARNING, "Select a budget to delete").showAndWait();
+        	AlertUtils.showAlert(Alert.AlertType.WARNING, "Select a budget to delete", currentStage);
         }
     }
 
 	@FXML
     private void handleEditAction() throws ClassNotFoundException, SQLException {
+		Stage currentStage = (Stage) amountId.getScene().getWindow();
 		if (editamountId.getText().isEmpty() || editmonthId.getValue() == null || edityearId.getValue() == null
 				|| editcategoryId.getValue() == null) {
-			new Alert(Alert.AlertType.WARNING, "Please fill all fields").showAndWait();
+			AlertUtils.showAlert(Alert.AlertType.WARNING, "Please fill all fields", currentStage);
 			return;
 		}
 
@@ -350,7 +354,7 @@ public class ManageBudgetController implements Initializable {
 		try {
 			amount = Double.parseDouble(editamountId.getText());
 			if (amount <= 0) {
-				new Alert(Alert.AlertType.ERROR, "Amount must be a positive number").showAndWait();
+				AlertUtils.showAlert(Alert.AlertType.ERROR, "Amount must be a positive number", currentStage);
                 return;
             }
 			
@@ -361,7 +365,7 @@ public class ManageBudgetController implements Initializable {
 			}
 			boolean edited = budgetDAO.editBudget(selectedBudget.getBudgetId(), amount, catId, editmonthId.getValue(), edityearId.getValue());
 			if (edited) {
-				new Alert(Alert.AlertType.CONFIRMATION, "Budget edited successfully. Choose the filters again to fetch the updated budget").showAndWait();
+				AlertUtils.showAlert(Alert.AlertType.CONFIRMATION, "Budget edited successfully. Choose the filters again to fetch the updated budget", currentStage);
 				editamountId.clear(); // Clear the text field
 				editmonthId.setPromptText("Select Month");
 				edityearId.setPromptText("Select Year");
@@ -369,19 +373,20 @@ public class ManageBudgetController implements Initializable {
             }
 			
 		} catch (NumberFormatException e) {
-			new Alert(Alert.AlertType.ERROR, "Amount must be a valid number").showAndWait();
+			AlertUtils.showAlert(Alert.AlertType.ERROR, "Amount must be a valid number", currentStage);
             return;
         }
     }
 	
 	@FXML
 	private void populateEditFields() {
+		Stage currentStage = (Stage) amountId.getScene().getWindow();
 		selectedBudget = tabViewId.getSelectionModel().getSelectedItem();
         if (selectedBudget != null) {
         	editamountId.setText(String.valueOf(selectedBudget.getAmount()));
         }
         else {
-        	new Alert(Alert.AlertType.WARNING, "Select a budget to edit").showAndWait();
+        	AlertUtils.showAlert(Alert.AlertType.WARNING, "Select a budget to edit", currentStage);
         }
 	    
 	}

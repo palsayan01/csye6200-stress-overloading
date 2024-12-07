@@ -18,7 +18,7 @@ import main.java.csye6200.dao.CategoryDAOImpl;
 import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.dao.GoalDAOImpl;
 import main.java.csye6200.models.Goal;
-import main.java.csye6200.utils.SessionManager;
+import main.java.csye6200.utils.*;
 
 public class AddGoalController implements Initializable {
 	
@@ -62,10 +62,11 @@ public class AddGoalController implements Initializable {
 
 	@FXML
 	public void addGoal() {
+		Stage currentStage = (Stage) goalNameId.getScene().getWindow();
 		try {
 			// Validate input
 			if (goalNameId.getText().isEmpty() || amountId.getText() == null || dateId.getValue() == null) {
-				new Alert(Alert.AlertType.WARNING, "Please fill all the details").showAndWait();
+				AlertUtils.showAlert(Alert.AlertType.WARNING, "Please fill all the details", currentStage);
 				return;
 			}
 
@@ -73,11 +74,11 @@ public class AddGoalController implements Initializable {
 			try {
 				amount = Double.parseDouble(amountId.getText());
 				if (amount <= 0) {
-					new Alert(Alert.AlertType.ERROR, "Amount must be a positive number").showAndWait();
+					AlertUtils.showAlert(Alert.AlertType.ERROR, "Amount must be a positive number", currentStage);
 	                return;
 	            }
 			} catch (NumberFormatException e) {
-				new Alert(Alert.AlertType.ERROR, "Amount must be a valid number").showAndWait();
+				AlertUtils.showAlert(Alert.AlertType.ERROR, "Amount must be a valid number", currentStage);
                 return;
             }
 			
@@ -90,10 +91,10 @@ public class AddGoalController implements Initializable {
 			result = goalDAO.createGoal(goal, userID);
 
 			if (result == 1) {
-				new Alert(Alert.AlertType.CONFIRMATION, "New goal created successfully").showAndWait();
+				AlertUtils.showAlert(Alert.AlertType.CONFIRMATION, "New goal created successfully", currentStage);
 			}
 			else {
-				new Alert(Alert.AlertType.CONFIRMATION, "Failed to create a new goal").showAndWait();
+				AlertUtils.showAlert(Alert.AlertType.CONFIRMATION, "Failed to create a new goal", currentStage);
             }
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

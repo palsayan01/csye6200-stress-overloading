@@ -1,5 +1,6 @@
 package main.java.csye6200.controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,7 +13,7 @@ import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.dao.TransactionDAO;
 import main.java.csye6200.models.Transaction;
 import main.java.csye6200.models.TransactionType;
-import main.java.csye6200.utils.SessionManager;
+import main.java.csye6200.utils.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
@@ -83,15 +84,14 @@ public class TransactionController implements Initializable{
         String categoryId = categoryMap.get(category);
         
         Transaction transaction = new Transaction(description, amount, date, categoryId, type, uid);
+        Stage currentStage = (Stage) saveButton.getScene().getWindow();
 
         try {
             boolean success = transactionDAO.addTransaction(transaction);
             if (success) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Transaction saved successfully!", ButtonType.OK);
-                alert.showAndWait();
+                AlertUtils.showAlert(Alert.AlertType.INFORMATION, "Transaction saved successfully!", currentStage);
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Failed to save transaction.", ButtonType.OK);
-                alert.showAndWait();
+                AlertUtils.showAlert(Alert.AlertType.ERROR, "Failed to save transaction.", currentStage);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

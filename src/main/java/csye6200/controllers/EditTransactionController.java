@@ -10,6 +10,7 @@ import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.dao.TransactionDAO;
 import main.java.csye6200.models.Transaction;
 import main.java.csye6200.models.TransactionType;
+import main.java.csye6200.utils.AlertUtils;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -92,16 +93,13 @@ public class EditTransactionController {
             transaction.setCategory(categoryMap.get(category));
             transaction.setAmount(amount);
             transaction.setTransactionDate(date);
-
+            
+            Stage currentStage = (Stage) descriptionField.getScene().getWindow();
             boolean success = transactionDAO.updateTransaction(transaction);
             if (success) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Transaction updated successfully!", ButtonType.OK);
-                alert.showAndWait();
-
-                closeWindow();
+                AlertUtils.showAlert(Alert.AlertType.INFORMATION, "Transaction saved successfully!", currentStage);
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Failed to update transaction.", ButtonType.OK);
-                alert.showAndWait();
+                AlertUtils.showAlert(Alert.AlertType.ERROR, "Failed to save transaction.", currentStage);
             }
         } catch (Exception e) {
             e.printStackTrace();
