@@ -19,7 +19,7 @@ import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.models.Transaction;
 import main.java.csye6200.models.Category;
 import main.java.csye6200.models.TransactionType;
-import main.java.csye6200.utils.SessionManager;
+import main.java.csye6200.utils.*;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
@@ -174,18 +174,15 @@ public class TransactionHistoryController implements Initializable  {
     }
     @FXML
     private void navigateToAddTransaction() {
+    	Stage currentStage = (Stage) navigateToAddTransactionButton.getScene().getWindow();
         try {
             // Load the AddTransaction FXML
         	FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/addTransaction.fxml"));
             Scene scene = new Scene(loader.load());
-
-            // Create a new stage for the Add Transaction window
-            Stage currentStage = (Stage) navigateToAddTransactionButton.getScene().getWindow();
             currentStage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Unable to load Add Transaction screen.", ButtonType.OK);
-            alert.showAndWait();
+            AlertUtils.showAlert(Alert.AlertType.ERROR, "Unable to load Add Transaction screen.", currentStage);
         }
     }
     @FXML
@@ -223,12 +220,10 @@ public class TransactionHistoryController implements Initializable  {
                 ((Stage) editButton.getScene().getWindow()).close();
             } catch (IOException e) {
                 e.printStackTrace();
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Unable to load edit screen.", ButtonType.OK);
-                alert.showAndWait();
+                AlertUtils.showAlert(Alert.AlertType.ERROR, "Unable to load edit screen.");
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a transaction to edit.", ButtonType.OK);
-            alert.showAndWait();
+        	AlertUtils.showAlert(Alert.AlertType.WARNING, "Please select a transaction to edit.");
         }
     }
 

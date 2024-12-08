@@ -1,5 +1,6 @@
 package main.java.csye6200.controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,7 +12,7 @@ import main.java.csye6200.dao.CategoryDAOImpl;
 import main.java.csye6200.dao.TransactionDAO;
 import main.java.csye6200.models.Transaction;
 import main.java.csye6200.models.TransactionType;
-import main.java.csye6200.utils.SessionManager;
+import main.java.csye6200.utils.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
@@ -84,7 +85,8 @@ public class TransactionController implements Initializable {
     }
 
     private void saveTransaction() {
-        if (!validateInputs()) {
+    	Stage currentStage = (Stage) saveButton.getScene().getWindow();
+        if (!validateInputs(currentStage)) {
             return;
         }
 
@@ -100,49 +102,43 @@ public class TransactionController implements Initializable {
         try {
             boolean success = transactionDAO.addTransaction(transaction);
             if (success) {
-                showAlert(Alert.AlertType.INFORMATION, "Transaction saved successfully!");
-                clearInputs();
+                AlertUtils.showAlert(Alert.AlertType.INFORMATION, "Transaction saved successfully!", currentStage);
             } else {
-                showAlert(Alert.AlertType.ERROR, "Failed to save transaction.");
+                AlertUtils.showAlert(Alert.AlertType.ERROR, "Failed to save transaction.", currentStage);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "An error occurred while saving the transaction.");
+            AlertUtils.showAlert(Alert.AlertType.ERROR, "An error occurred while saving the transaction.", currentStage);
         }
     }
 
-    private boolean validateInputs() {
+    private boolean validateInputs(Stage currentStage) {
         if (descriptionField.getText().trim().isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Please enter a description.");
+            AlertUtils.showAlert(Alert.AlertType.WARNING, "Please enter a description.", currentStage);
             return false;
         }
 
         if (typeComboBox.getValue() == null) {
-            showAlert(Alert.AlertType.WARNING, "Please select a transaction type.");
+            AlertUtils.showAlert(Alert.AlertType.WARNING, "Please select a transaction type.", currentStage);
             return false;
         }
 
         if (categoryComboBox.getValue() == null) {
-            showAlert(Alert.AlertType.WARNING, "Please select a category.");
+            AlertUtils.showAlert(Alert.AlertType.WARNING, "Please select a category.", currentStage);
             return false;
         }
 
         if (amountField.getText().trim().isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Please enter an amount.");
+            AlertUtils.showAlert(Alert.AlertType.WARNING, "Please enter an amount.", currentStage);
             return false;
         }
 
         if (datePicker.getValue() == null) {
-            showAlert(Alert.AlertType.WARNING, "Please select a date.");
+            AlertUtils.showAlert(Alert.AlertType.WARNING, "Please select a date.", currentStage);
             return false;
         }
 
         return true;
-    }
-
-    private void showAlert(Alert.AlertType alertType, String message) {
-        Alert alert = new Alert(alertType, message, ButtonType.OK);
-        alert.showAndWait();
     }
 
     private void clearInputs() {

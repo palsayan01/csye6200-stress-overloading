@@ -94,6 +94,7 @@ public class DashboardController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/LoginPage.fxml"));
             Scene loginScene = new Scene(loader.load());
             loginStage.setScene(loginScene);
+            loginStage.setMaximized(true);
             loginStage.show();
         } catch (Exception e) {
             e.printStackTrace();

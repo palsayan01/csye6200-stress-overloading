@@ -9,6 +9,7 @@ import main.java.csye6200.dao.CategoryDAOImpl;
 import main.java.csye6200.dao.TransactionDAO;
 import main.java.csye6200.models.Transaction;
 import main.java.csye6200.models.TransactionType;
+import main.java.csye6200.utils.AlertUtils;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -70,6 +71,8 @@ public class EditTransactionController {
     }
 
     private void saveTransaction() {
+    	
+    	Stage currentStage = (Stage) descriptionField.getScene().getWindow();
         if (!validateInputs()) {
             return;
         }
@@ -86,17 +89,17 @@ public class EditTransactionController {
             transaction.setCategory(categoryMap.get(category));
             transaction.setAmount(amount);
             transaction.setTransactionDate(date);
-
+            
             boolean success = transactionDAO.updateTransaction(transaction);
             if (success) {
-                showAlert(Alert.AlertType.INFORMATION, "Transaction updated successfully!");
-                closeWindow();
+                AlertUtils.showAlert(Alert.AlertType.INFORMATION, "Transaction saved successfully!", currentStage);
+				closeWindow();
             } else {
-                showAlert(Alert.AlertType.ERROR, "Failed to update transaction.");
+                AlertUtils.showAlert(Alert.AlertType.ERROR, "Failed to save transaction.", currentStage);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "An error occurred while updating the transaction.");
+            AlertUtils.showAlert(Alert.AlertType.ERROR, "An error occurred while updating the transaction.", currentStage);
         }
     }
 
@@ -107,7 +110,7 @@ public class EditTransactionController {
     private boolean validateDescription() {
         String description = descriptionField.getText().trim();
         if (description.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Description cannot be empty.");
+            AlertUtils.showAlert(Alert.AlertType.WARNING, "Description cannot be empty.");
             return false;
         }
         return true;
@@ -117,11 +120,11 @@ public class EditTransactionController {
         try {
             double amount = Double.parseDouble(amountField.getText());
             if (amount <= 0) {
-                showAlert(Alert.AlertType.WARNING, "Amount must be a positive number.");
+                AlertUtils.showAlert(Alert.AlertType.WARNING, "Amount must be a positive number.");
                 return false;
             }
         } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.WARNING, "Invalid amount. Please enter a valid number.");
+            AlertUtils.showAlert(Alert.AlertType.WARNING, "Invalid amount. Please enter a valid number.");
             return false;
         }
         return true;
@@ -129,7 +132,7 @@ public class EditTransactionController {
 
     private boolean validateDate() {
         if (datePicker.getValue() == null) {
-            showAlert(Alert.AlertType.WARNING, "Please select a date.");
+            AlertUtils.showAlert(Alert.AlertType.WARNING, "Please select a date.");
             return false;
         }
         return true;
@@ -137,7 +140,7 @@ public class EditTransactionController {
 
     private boolean validateType() {
         if (typeComboBox.getValue() == null) {
-            showAlert(Alert.AlertType.WARNING, "Please select a transaction type.");
+            AlertUtils.showAlert(Alert.AlertType.WARNING, "Please select a transaction type.");
             return false;
         }
         return true;
@@ -145,15 +148,10 @@ public class EditTransactionController {
 
     private boolean validateCategory() {
         if (categoryComboBox.getValue() == null) {
-            showAlert(Alert.AlertType.WARNING, "Please select a category.");
+            AlertUtils.showAlert(Alert.AlertType.WARNING, "Please select a category.");
             return false;
         }
         return true;
-    }
-
-    private void showAlert(Alert.AlertType alertType, String message) {
-        Alert alert = new Alert(alertType, message, ButtonType.OK);
-        alert.showAndWait();
     }
 
     private void cancelEdit() {

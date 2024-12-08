@@ -21,14 +21,12 @@
           <TableColumn fx:id="typeColumn" prefWidth="137.60003662109375" text="Type" />
         </columns>
       </TableView>
-      <Button layoutX="223.0" layoutY="427.0" mnemonicParsing="false" onAction="#handleBackAction" styleClass="backbutton" text="Back" />
       <Button layoutX="893.0" layoutY="700.0" mnemonicParsing="false" onAction="#handleEditAction" styleClass="clickbutton" text="Edit" />
       <Button layoutX="970.0" layoutY="700.0" mnemonicParsing="false" onAction="#handleDeleteAction" styleClass="clickbutton" text="Delete" />
       <Button layoutX="686.0" layoutY="700.0" mnemonicParsing="false" onAction="#handleSearchAction" styleClass="clickbutton" text="Search" />
       <TextField fx:id="searchTextField" layoutX="511.0" layoutY="702.0" styleClass="text-field" />
       <ComboBox fx:id="filterComboBox" layoutX="274.0" layoutY="698.0" prefHeight="25.0" prefWidth="149.0" promptText="" styleClass="combobox" />
       <Label layoutX="223.0" layoutY="707.0" styleClass="sublabeltext" text="Filter" />
-      <Button fx:id="navigateToAddTransactionButton" layoutX="550.0" layoutY="772.0" mnemonicParsing="false" onAction="#navigateToAddTransaction" styleClass="clickbutton" text="Add New Transaction" />
       <Button layoutX="932.0" layoutY="415.0" mnemonicParsing="false" onAction="#refresh" styleClass="clickbutton" text="Refresh table" />
       <Label layoutX="549.0" layoutY="405.0" prefHeight="55.0" prefWidth="175.0" text="Transaction History">
          <font>

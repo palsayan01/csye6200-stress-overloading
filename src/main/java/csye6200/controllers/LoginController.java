@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 import main.java.csye6200.dao.DatabaseConnect;
 import main.java.csye6200.dao.UserDAOImpl;
 import main.java.csye6200.models.User;
-import main.java.csye6200.utils.SessionManager; 
+import main.java.csye6200.utils.*; 
 
 public class LoginController implements Initializable  {
 	
@@ -62,10 +62,12 @@ public class LoginController implements Initializable  {
 	        // Get the entered email and password
 	        String email = emailField.getText();
 	        String password = pwField.getText();
+	        
+	        Stage currentStage = (Stage) emailField.getScene().getWindow();
 
 	        // Validate input (check if fields are empty)
 	        if (email.isEmpty() || password.isEmpty()) {
-	            showAlert(Alert.AlertType.WARNING, "Please enter both email and password.");
+	        	AlertUtils.showAlert(Alert.AlertType.WARNING, "Please enter both email and password.", currentStage);
 	            return;
 	        }
 
@@ -84,7 +86,7 @@ public class LoginController implements Initializable  {
 			        	//Store the authenticated user's ID in the session
 			            SessionManager.getInstance().setCurrentUser(userId);
 
-			            showAlert(Alert.AlertType.INFORMATION, "Login successful!");
+			            AlertUtils.showAlert(Alert.AlertType.INFORMATION, "Login successful!", currentStage);
 			            navigateToMainDashboard();
 			            
 			        	}
@@ -93,14 +95,14 @@ public class LoginController implements Initializable  {
 		        	resultSet.close();
 	        	} catch (SQLException e) {
 	                e.printStackTrace();
-	     }
-  	
-	  } else {
-          showAlert(Alert.AlertType.ERROR, "Invalid email or password.");
-          emailField.clear();
-          pwField.clear();
-      }
- }
+			     }
+		  	
+			  } else {
+		          AlertUtils.showAlert(Alert.AlertType.ERROR, "Invalid email or password.", currentStage);
+		          emailField.clear();
+		          pwField.clear();
+		      }
+	    }
 
 
 
@@ -115,6 +117,7 @@ public class LoginController implements Initializable  {
 	        Parent dashboardRoot = FXMLLoader.load(getClass().getResource("/main/resources/fxml/Dashboard_main.fxml"));
 	        Scene dashboardScene = new Scene(dashboardRoot);
 	        dashboardStage.setScene(dashboardScene);
+	        dashboardStage.setMaximized(true);
 	        dashboardStage.show();
 	    }
 
@@ -126,6 +129,7 @@ public class LoginController implements Initializable  {
 	            Parent signUpRoot = FXMLLoader.load(getClass().getResource("/main/resources/fxml/SignUpPage.fxml"));
 	            Scene signUpScene = new Scene(signUpRoot);
 	            signUpStage.setScene(signUpScene);
+	            signUpStage.setMaximized(true);
 	            signUpStage.show();
 
 	            // Close the current login window
@@ -133,18 +137,8 @@ public class LoginController implements Initializable  {
 	            currentStage.close();
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	            showAlert(Alert.AlertType.ERROR, "Error loading the sign-up page.");
+	            Stage currentStage = (Stage) linkSignUp.getScene().getWindow();
+	            AlertUtils.showAlert(Alert.AlertType.ERROR, "Error loading the sign-up page.", currentStage);
 	        }
 	    }
-	    
-	    
-	    // Helper method to show alerts
-	    private void showAlert(Alert.AlertType alertType, String message) {
-	        Alert alert = new Alert(alertType);
-	        alert.setTitle(alertType == Alert.AlertType.ERROR ? "Error" : "Information");
-	        alert.setHeaderText(null);
-	        alert.setContentText(message);
-	        alert.showAndWait();
-	    }
-
 }

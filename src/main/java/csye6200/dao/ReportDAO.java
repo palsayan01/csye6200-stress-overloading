@@ -30,6 +30,7 @@ public class ReportDAO {
                 CATEGORY c ON t.CATEGORY_ID = c.CATEGORY_ID
             WHERE 
         		t.USERID = '%s' AND
+        		t.TRANSACTION_TYPE = 'EXPENSE' AND
                 EXTRACT(MONTH FROM t.TRANSACTION_DATE) = EXTRACT(MONTH FROM CURRENT_DATE)
             GROUP BY 
                 c.CATEGORY_NAME
