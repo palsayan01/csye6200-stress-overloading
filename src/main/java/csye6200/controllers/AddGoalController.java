@@ -69,6 +69,11 @@ public class AddGoalController implements Initializable {
 				AlertUtils.showAlert(Alert.AlertType.WARNING, "Please fill all the details", currentStage);
 				return;
 			}
+			
+			else if (goalNameId.getText().length() > 100) { // Example length validation
+	            new Alert(Alert.AlertType.WARNING, "Goal description should not exceed 100 characters").showAndWait();
+	            return;
+	        }
 
 			// Parse amount
 			try {
@@ -77,12 +82,19 @@ public class AddGoalController implements Initializable {
 					AlertUtils.showAlert(Alert.AlertType.ERROR, "Amount must be a positive number", currentStage);
 	                return;
 	            }
+				targetDate = dateId.getValue();
+				if (targetDate.isBefore(LocalDate.now())) {
+		            new Alert(Alert.AlertType.WARNING, "Target date cannot be in the past").showAndWait();
+		            return;
+		        }
 			} catch (NumberFormatException e) {
 				AlertUtils.showAlert(Alert.AlertType.ERROR, "Amount must be a valid number", currentStage);
                 return;
+            } catch (Exception ex) {
+            	new Alert(Alert.AlertType.ERROR, "Invalid date format. Please enter a valid date").showAndWait();
+                return;
             }
 			
-			targetDate = dateId.getValue();
 			Goal goal = new Goal();
 			goal.setGoalId();
 			goal.setGoalName(goalNameId.getText());

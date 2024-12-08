@@ -194,9 +194,11 @@ public class TrackBudgetGoal implements Initializable {
 			rs2 = budgetDAO.getTotalExpenseByCategory(rs.getString("category_id"), month, year, userID);
 			String categoryName = rs.getString("category_name");
 	        double amount = rs.getDouble("amount");
-	        double remainingBudget = 0;
+	        double remainingBudget = rs.getDouble("remaining_amount");;
 			while(rs2.next()) {
-				remainingBudget = amount - rs2.getDouble(1);
+				double budgetExhausted = rs2.getDouble(1); 
+				remainingBudget = amount - budgetExhausted;
+				budgetDAO.setRemainingBudget(rs.getString("budget_id"), remainingBudget);
 			}
 			String label = String.format("%s (Budget: %.2f)", categoryName, amount);
 			String labelRemaining = String.format("%s (Remaining: %.2f)", categoryName, remainingBudget);

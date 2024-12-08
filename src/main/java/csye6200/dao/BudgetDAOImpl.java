@@ -43,7 +43,7 @@ public class BudgetDAOImpl {
 	
 	public ResultSet getBudgetDetails(String month, int year, String userID) throws ClassNotFoundException {
 		try {
-			String query = "select bud.category_id, amount, remaining_amount, cat.category_name from budget bud\r\n"
+			String query = "select bud.category_id, amount, remaining_amount, cat.category_name, budget_id from budget bud\r\n"
 					+ "left join category cat\r\n"
 					+ "on bud.category_id = cat.category_id\r\n"
 					+ "where month=? and year=? and USERID=?";
@@ -151,6 +151,26 @@ public class BudgetDAOImpl {
 		}
 			return rs;
  
+	}
+
+
+	public boolean setRemainingBudget(String budget_id, double remainingBudget) {
+		// TODO Auto-generated method stub
+		boolean isUpdated = false;
+		String query = "UPDATE BUDGET SET REMAINING_AMOUNT=? WHERE BUDGET_ID = ?";
+
+        try {
+        	PreparedStatement st = con.prepareStatement(query);
+            st.setDouble(1, remainingBudget);
+            st.setString(2, budget_id);
+            int rowsAffected = st.executeUpdate();
+            isUpdated = rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isUpdated;
+		
 	}
 	
 	
