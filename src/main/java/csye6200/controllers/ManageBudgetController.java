@@ -184,7 +184,7 @@ public class ManageBudgetController implements Initializable {
                 return;
             }
 			
-
+			
 			category = categoryId.getValue();
 			rs = categoryDAO.getCategoryByName(category);
 			while(rs.next()) {
