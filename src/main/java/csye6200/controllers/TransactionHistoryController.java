@@ -201,7 +201,6 @@ public class TransactionHistoryController implements Initializable  {
     private void handleEditAction(ActionEvent event) {
         // Implement editing logic as needed.
     	Transaction selectedTransaction = transactionTable.getSelectionModel().getSelectedItem();
-    	Stage currentStage = (Stage) editButton.getScene().getWindow();
         if (selectedTransaction != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/fxml/editTransaction.fxml"));
@@ -221,10 +220,10 @@ public class TransactionHistoryController implements Initializable  {
                 ((Stage) editButton.getScene().getWindow()).close();
             } catch (IOException e) {
                 e.printStackTrace();
-                AlertUtils.showAlert(Alert.AlertType.ERROR, "Unable to load edit screen.", currentStage);
+                AlertUtils.showAlert(Alert.AlertType.ERROR, "Unable to load edit screen.");
             }
         } else {
-        	AlertUtils.showAlert(Alert.AlertType.WARNING, "Please select a transaction to edit.", currentStage);
+        	AlertUtils.showAlert(Alert.AlertType.WARNING, "Please select a transaction to edit.");
         }
     }
 

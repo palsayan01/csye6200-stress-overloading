@@ -57,7 +57,7 @@ public class ReportDAO {
         List<YearlyReport> reports = new ArrayList<>();
         String query = String.format("""
             SELECT 
-                TO_CHAR(TO_DATE(t.TRANSACTION_DATE, 'YY-MM-DD'), 'Month') AS MONTH,
+                TO_CHAR(TO_DATE(t.TRANSACTION_DATE, 'DD-MM-YY'), 'Month') AS MONTH,
                 SUM(CASE WHEN t.TRANSACTION_TYPE = 'INCOME' THEN t.AMOUNT ELSE 0 END) AS TOTAL_INCOME,
                 SUM(CASE WHEN t.TRANSACTION_TYPE = 'EXPENSE' THEN t.AMOUNT ELSE 0 END) AS TOTAL_EXPENSES,
                 (SUM(CASE WHEN t.TRANSACTION_TYPE = 'INCOME' THEN t.AMOUNT ELSE 0 END) - 
@@ -66,12 +66,12 @@ public class ReportDAO {
                 TRANSACTIONS t
             WHERE 
                 t.USERID = '%s' AND
-                EXTRACT(YEAR FROM TO_DATE(t.TRANSACTION_DATE, 'YY-MM-DD')) = EXTRACT(YEAR FROM CURRENT_DATE)
+                EXTRACT(YEAR FROM TO_DATE(t.TRANSACTION_DATE, 'DD-MM-YY')) = EXTRACT(YEAR FROM CURRENT_DATE)
             GROUP BY 
-                TO_CHAR(TO_DATE(t.TRANSACTION_DATE, 'YY-MM-DD'), 'Month'),
-                EXTRACT(MONTH FROM TO_DATE(t.TRANSACTION_DATE, 'YY-MM-DD'))
+                TO_CHAR(TO_DATE(t.TRANSACTION_DATE, 'DD-MM-YY'), 'Month'),
+                EXTRACT(MONTH FROM TO_DATE(t.TRANSACTION_DATE, 'DD-MM-YY'))
             ORDER BY 
-                EXTRACT(MONTH FROM TO_DATE(t.TRANSACTION_DATE, 'YY-MM-DD'))
+                EXTRACT(MONTH FROM TO_DATE(t.TRANSACTION_DATE, 'DD-MM-YY'))
         """, SessionManager.getInstance().getUserId());
 
         try (PreparedStatement statement = connection.prepareStatement(query);
