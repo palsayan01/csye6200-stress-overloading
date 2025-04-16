@@ -12,7 +12,7 @@ Data Access: JDBC for efficient database connectivity and operations
 # Key Components
 ## 1. User Authentication System
 - Implements secure login and signup functionality
-- Utilizes bcrypt for password hashing, ensuring user data protection1
+- Utilizes bcrypt for password hashing, ensuring user data protection
 ## 2. Database Structure
 - Employs multiple tables: Budget, Goal, Transactions, Transaction History, Reports, Notifications, and Users
 - Designed for efficient data retrieval and management
